@@ -1,0 +1,10 @@
+toolchain/build.git              106603b925b7f20177c5b7613535d9d43ed35b7d Options brought in from core combo for IA
+toolchain/gmp.git                e6b9669dafc6a5f83c80b4b4176359b78bccdc90 Add gmp-5.0.5.tar.bz2
+toolchain/mpfr.git               bde731396c38c8d5b0bca800aace6a690d0d2978 add mpfr-2.4.2.tar.bz2
+toolchain/mpc.git                a4109ccc6e07f72f41c397a17fdfbed3e5e19c66 Add mpc-0.8.1 package to toolchain source.
+toolchain/expat.git              40172a0ae9d40a068f1e1a48ffcf6a1ccf765ed5 expat package for building gdb-7.3
+toolchain/binutils.git           dc51c7a5e0e2620dc85e6c9c46027dce94a85e1f Fix gold issue on fsck_msdos build when objects built by ICC
+toolchain/gcc.git                081453273c622c16a2d87b61f87a861261a08f07 Backport r193554 to GCC4.7/x86 resotre earlier cmov behavior
+toolchain/gdb.git                5b9104eb197d16b82cd5a50bf7fe8f721607faeb Fix build with --enable-plugins
+toolchain/clang.git              49c13b39caae34e61509823707392b9859bf77c9 Fix clang le32 driver regression.
+toolchain/llvm.git               95b8007dded354d15113cc0038f12ec62fa2b596 Update the live-ins after lowering tMOVCCr_pseudo.
