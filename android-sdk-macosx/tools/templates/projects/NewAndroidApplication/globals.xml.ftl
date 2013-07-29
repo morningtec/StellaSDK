@@ -6,6 +6,6 @@
     <global id="manifestOut" value="." />
     <global id="srcOut" value="src/${slashedPackageName(packageName)}" />
     <global id="resOut" value="res" />
-    <global id="mavenUrl" value="http://repo1.maven.org/maven2" />
+    <global id="mavenUrl" value="mavenCentral" />
     <global id="buildToolsVersion" value="${buildApi}" />
 </globals>

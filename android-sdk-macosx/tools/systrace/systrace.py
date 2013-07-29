@@ -12,22 +12,44 @@ the kernel.  It creates an HTML file for visualizing the trace.
 
 import errno, optparse, os, select, subprocess, sys, time, zlib
 
-# This list is based on the tags in frameworks/native/include/utils/Trace.h.
-trace_tag_bits = {
-  'gfx':      1<<1,
-  'input':    1<<2,
-  'view':     1<<3,
-  'webview':  1<<4,
-  'wm':       1<<5,
-  'am':       1<<6,
-  'sync':     1<<7,
-  'audio':    1<<8,
-  'video':    1<<9,
-  'camera':   1<<10,
-}
-
 flattened_css_file = 'style.css'
 flattened_js_file = 'script.js'
+
+class OptionParserIgnoreErrors(optparse.OptionParser):
+  def error(self, msg):
+    pass
+
+  def exit(self):
+    pass
+
+  def print_usage(self):
+    pass
+
+  def print_help(self):
+    pass
+
+  def print_version(self):
+    pass
+
+def get_device_sdk_version():
+  getprop_args = ['adb', 'shell', 'getprop', 'ro.build.version.sdk']
+
+  parser = OptionParserIgnoreErrors()
+  parser.add_option('-e', '--serial', dest='device_serial', type='string')
+  options, args = parser.parse_args()
+  if options.device_serial is not None:
+    getprop_args[1:1] = ['-s', options.device_serial]
+
+  adb = subprocess.Popen(getprop_args, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+  out, err = adb.communicate()
+  if adb.returncode != 0:
+    print >> sys.stderr, 'Error querying device SDK-version:'
+    print >> sys.stderr, err
+    sys.exit(1)
+
+  version = int(out)
+  return version
 
 def add_adb_serial(command, serial):
   if serial != None:
@@ -35,97 +57,72 @@ def add_adb_serial(command, serial):
     command.insert(1, '-s')
 
 def main():
-  parser = optparse.OptionParser()
+  device_sdk_version = get_device_sdk_version()
+  if device_sdk_version < 18:
+    legacy_script = os.path.join(os.path.dirname(sys.argv[0]), 'systrace-legacy.py')
+    os.execv(legacy_script, sys.argv)
+
+  usage = "Usage: %prog [options] [category1 [category2 ...]]"
+  desc = "Example: %prog -b 32768 -t 15 gfx input view sched freq"
+  parser = optparse.OptionParser(usage=usage, description=desc)
   parser.add_option('-o', dest='output_file', help='write HTML to FILE',
                     default='trace.html', metavar='FILE')
   parser.add_option('-t', '--time', dest='trace_time', type='int',
                     help='trace for N seconds', metavar='N')
   parser.add_option('-b', '--buf-size', dest='trace_buf_size', type='int',
                     help='use a trace buffer size of N KB', metavar='N')
-  parser.add_option('-d', '--disk', dest='trace_disk', default=False,
-                    action='store_true', help='trace disk I/O (requires root)')
-  parser.add_option('-f', '--cpu-freq', dest='trace_cpu_freq', default=False,
-                    action='store_true', help='trace CPU frequency changes')
-  parser.add_option('-i', '--cpu-idle', dest='trace_cpu_idle', default=False,
-                    action='store_true', help='trace CPU idle events')
-  parser.add_option('-l', '--cpu-load', dest='trace_cpu_load', default=False,
-                    action='store_true', help='trace CPU load')
-  parser.add_option('-s', '--no-cpu-sched', dest='trace_cpu_sched', default=True,
-                    action='store_false', help='inhibit tracing CPU ' +
-                    'scheduler (allows longer trace times by reducing data ' +
-                    'rate into buffer)')
-  parser.add_option('-u', '--bus-utilization', dest='trace_bus_utilization',
-                    default=False, action='store_true',
-                    help='trace bus utilization (requires root)')
-  parser.add_option('-w', '--workqueue', dest='trace_workqueue', default=False,
-                    action='store_true', help='trace the kernel workqueues ' +
-                    '(requires root)')
-  parser.add_option('--set-tags', dest='set_tags', action='store',
-                    help='set the enabled trace tags and exit; set to a ' +
-                    'comma separated list of: ' +
-                    ', '.join(trace_tag_bits.iterkeys()))
+  parser.add_option('-k', '--ktrace', dest='kfuncs', action='store',
+                    help='specify a comma-separated list of kernel functions to trace')
+  parser.add_option('-l', '--list-categories', dest='list_categories', default=False,
+                    action='store_true', help='list the available categories and exit')
+  parser.add_option('-a', '--app', dest='app_name', default=None, type='string',
+                    action='store', help='enable application-level tracing for comma-separated ' +
+                    'list of app cmdlines')
+
   parser.add_option('--link-assets', dest='link_assets', default=False,
                     action='store_true', help='link to original CSS or JS resources '
                     'instead of embedding them')
   parser.add_option('--from-file', dest='from_file', action='store',
-                    help='read the trace from a file rather than running a live trace')
+                    help='read the trace from a file (compressed) rather than running a live trace')
   parser.add_option('--asset-dir', dest='asset_dir', default='trace-viewer',
                     type='string', help='')
   parser.add_option('-e', '--serial', dest='device_serial', type='string',
                     help='adb device serial number')
+
   options, args = parser.parse_args()
 
-  if options.set_tags:
-    flags = 0
-    tags = options.set_tags.split(',')
-    for tag in tags:
-      try:
-        flags |= trace_tag_bits[tag]
-      except KeyError:
-        parser.error('unrecognized tag: %s\nknown tags are: %s' %
-                     (tag, ', '.join(trace_tag_bits.iterkeys())))
-    atrace_args = ['adb', 'shell', 'setprop', 'debug.atrace.tags.enableflags', hex(flags)]
-    add_adb_serial(atrace_args, options.device_serial)
-    try:
-      subprocess.check_call(atrace_args)
-    except subprocess.CalledProcessError, e:
-      print >> sys.stderr, 'unable to set tags: %s' % e
-    print '\nSet enabled tags to: %s\n' % ', '.join(tags)
-    print ('You will likely need to restart the Android framework for this to ' +
-          'take effect:\n\n    adb shell stop\n    adb shell ' +
-          'start\n')
-    return
-
-  atrace_args = ['adb', 'shell', 'atrace', '-z']
-  add_adb_serial(atrace_args, options.device_serial)
-
-  if options.trace_disk:
-    atrace_args.append('-d')
-  if options.trace_cpu_freq:
-    atrace_args.append('-f')
-  if options.trace_cpu_idle:
-    atrace_args.append('-i')
-  if options.trace_cpu_load:
-    atrace_args.append('-l')
-  if options.trace_cpu_sched:
-    atrace_args.append('-s')
-  if options.trace_bus_utilization:
-    atrace_args.append('-u')
-  if options.trace_workqueue:
-    atrace_args.append('-w')
-  if options.trace_time is not None:
-    if options.trace_time > 0:
-      atrace_args.extend(['-t', str(options.trace_time)])
-    else:
-      parser.error('the trace time must be a positive number')
-  if options.trace_buf_size is not None:
-    if options.trace_buf_size > 0:
-      atrace_args.extend(['-b', str(options.trace_buf_size)])
-    else:
-      parser.error('the trace buffer size must be a positive number')
-
-  if options.from_file is not None:
+  if options.list_categories:
+    atrace_args = ['adb', 'shell', 'atrace', '--list_categories']
+    expect_trace = False
+  elif options.from_file is not None:
     atrace_args = ['cat', options.from_file]
+    expect_trace = True
+  else:
+    atrace_args = ['adb', 'shell', 'atrace', '-z']
+    expect_trace = True
+
+    if options.trace_time is not None:
+      if options.trace_time > 0:
+        atrace_args.extend(['-t', str(options.trace_time)])
+      else:
+        parser.error('the trace time must be a positive number')
+
+    if options.trace_buf_size is not None:
+      if options.trace_buf_size > 0:
+        atrace_args.extend(['-b', str(options.trace_buf_size)])
+      else:
+        parser.error('the trace buffer size must be a positive number')
+
+    if options.app_name is not None:
+      atrace_args.extend(['-a', options.app_name])
+
+    if options.kfuncs is not None:
+      atrace_args.extend(['-k', options.kfuncs])
+
+    atrace_args.extend(args)
+
+  if atrace_args[0] == 'adb':
+    add_adb_serial(atrace_args, options.device_serial)
 
   script_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
@@ -146,70 +143,106 @@ def main():
 
   html_filename = options.output_file
 
-  trace_started = False
-  leftovers = ''
   adb = subprocess.Popen(atrace_args, stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
-  dec = zlib.decompressobj()
-  while True:
+
+  result = None
+  data = []
+
+  # Read the text portion of the output and watch for the 'TRACE:' marker that
+  # indicates the start of the trace data.
+  while result is None:
     ready = select.select([adb.stdout, adb.stderr], [], [adb.stdout, adb.stderr])
     if adb.stderr in ready[0]:
       err = os.read(adb.stderr.fileno(), 4096)
       sys.stderr.write(err)
       sys.stderr.flush()
     if adb.stdout in ready[0]:
-      out = leftovers + os.read(adb.stdout.fileno(), 4096)
-      if options.from_file is None:
-        out = out.replace('\r\n', '\n')
-      if out.endswith('\r'):
-        out = out[:-1]
-        leftovers = '\r'
-      else:
-        leftovers = ''
-      if not trace_started:
-        lines = out.splitlines(True)
-        out = ''
-        for i, line in enumerate(lines):
-          if line == 'TRACE:\n':
-            sys.stdout.write("downloading trace...")
-            sys.stdout.flush()
-            out = ''.join(lines[i+1:])
-            html_file = open(html_filename, 'w')
-            html_file.write(html_prefix % (css, js))
-            trace_started = True
-            break
-          elif 'TRACE:'.startswith(line) and i == len(lines) - 1:
-            leftovers = line + leftovers
-          else:
-            sys.stdout.write(line)
-            sys.stdout.flush()
-      if len(out) > 0:
-        out = dec.decompress(out)
-      html_out = out.replace('\n', '\\n\\\n')
-      if len(html_out) > 0:
-        html_file.write(html_out)
+      out = os.read(adb.stdout.fileno(), 4096)
+      parts = out.split('\nTRACE:', 1)
+
+      txt = parts[0].replace('\r', '')
+      if len(parts) == 2:
+        # The '\nTRACE:' match stole the last newline from the text, so add it
+        # back here.
+        txt += '\n'
+      sys.stdout.write(txt)
+      sys.stdout.flush()
+
+      if len(parts) == 2:
+        data.append(parts[1])
+        sys.stdout.write("downloading trace...")
+        sys.stdout.flush()
+        break
+
     result = adb.poll()
-    if result is not None:
+
+  # Read and buffer the data portion of the output.
+  while True:
+    ready = select.select([adb.stdout, adb.stderr], [], [adb.stdout, adb.stderr])
+    keepReading = False
+    if adb.stderr in ready[0]:
+      err = os.read(adb.stderr.fileno(), 4096)
+      if len(err) > 0:
+        keepReading = True
+        sys.stderr.write(err)
+        sys.stderr.flush()
+    if adb.stdout in ready[0]:
+      out = os.read(adb.stdout.fileno(), 4096)
+      if len(out) > 0:
+        keepReading = True
+        data.append(out)
+
+    if result is not None and not keepReading:
       break
-  if result != 0:
-    print >> sys.stderr, 'adb returned error code %d' % result
-  elif trace_started:
-    html_out = dec.flush().replace('\n', '\\n\\\n').replace('\r', '')
-    if len(html_out) > 0:
+
+    result = adb.poll()
+
+  if result == 0:
+    if expect_trace:
+      data = ''.join(data)
+
+      # Collapse CRLFs that are added by adb shell.
+      if data.startswith('\r\n'):
+        data = data.replace('\r\n', '\n')
+
+      # Skip the initial newline.
+      data = data[1:]
+
+      if not data:
+        print >> sys.stderr, ('No data was captured.  Output file was not ' +
+          'written.')
+        sys.exit(1)
+      else:
+        # Indicate to the user that the data download is complete.
+        print " done\n"
+
+      html_file = open(html_filename, 'w')
+      html_file.write(html_prefix % (css, js))
+
+      size = 4096
+      dec = zlib.decompressobj()
+      for chunk in (data[i:i+size] for i in xrange(0, len(data), size)):
+        decoded_chunk = dec.decompress(chunk)
+        html_chunk = decoded_chunk.replace('\n', '\\n\\\n')
+        html_file.write(html_chunk)
+
+      html_out = dec.flush().replace('\n', '\\n\\\n')
       html_file.write(html_out)
-    html_file.write(html_suffix)
-    html_file.close()
-    print " done\n\n    wrote file://%s/%s\n" % (os.getcwd(), options.output_file)
-  else:
-    print >> sys.stderr, ('An error occured while capturing the trace.  Output ' +
-      'file was not written.')
+      html_file.write(html_suffix)
+      html_file.close()
+      print "\n    wrote file://%s/%s\n" % (os.getcwd(), options.output_file)
+
+  else: # i.e. result != 0
+    print >> sys.stderr, 'adb returned error code %d' % result
+    sys.exit(1)
 
 def get_assets(src_dir, build_dir):
   sys.path.append(build_dir)
   gen = __import__('generate_standalone_timeline_view', {}, {})
   parse_deps = __import__('parse_deps', {}, {})
   filenames = gen._get_input_filenames()
-  load_sequence = parse_deps.calc_load_sequence(filenames)
+  load_sequence = parse_deps.calc_load_sequence(filenames, src_dir)
 
   js_files = []
   js_flattenizer = "window.FLATTENED = {};\n"
@@ -228,6 +261,7 @@ def get_assets(src_dir, build_dir):
 html_prefix = """<!DOCTYPE HTML>
 <html>
 <head i18n-values="dir:textdirection;">
+<meta charset="utf-8"/>
 <title>Android System Trace</title>
 %s
 %s
@@ -236,9 +270,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!linuxPerfData)
     return;
 
-  var m = new tracing.TimelineModel(linuxPerfData);
+  var m = new tracing.Model(linuxPerfData);
   var timelineViewEl = document.querySelector('.view');
-  base.ui.decorate(timelineViewEl, tracing.TimelineView);
+  tracing.ui.decorate(timelineViewEl, tracing.TimelineView);
   timelineViewEl.model = m;
   timelineViewEl.tabIndex = 1;
   timelineViewEl.timeline.focusElement = timelineViewEl;
