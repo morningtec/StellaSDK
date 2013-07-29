@@ -6,7 +6,7 @@
     <instantiate from="build.gradle.ftl"
                    to="${projectOut}/build.gradle" />
 </#if>
-    <instantiate from="MODULE_NAME/src/main/AndroidManifest.xml.ftl"
+    <instantiate from="AndroidManifest.xml.ftl"
                    to="${manifestOut}/AndroidManifest.xml" />
 
 <#if copyIcons>
