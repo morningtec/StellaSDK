@@ -157,7 +157,12 @@ typedef struct _KerningHashElement
 
 - (void)parseConfigFile:(NSString*)fntFile
 {
-	NSString *fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
+    NSString *fullpath;
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    fullpath = [CCFileUtils fullPathFromRelativePath: fntFile resolutionType: &resolutionType];
+#else
+	fullpath = [CCFileUtils fullPathFromRelativePath:fntFile];
+#endif
 	NSError *error;
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
 
@@ -298,6 +303,16 @@ typedef struct _KerningHashElement
 		propertyValue = [paddingEnum nextObject];
 		padding_.left = [propertyValue intValue];
 
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+        CGFloat     contentScale    = CC_CONTENT_SCALE_FACTOR () > 1.0f ? 2.0f : 1.0f;
+        if (resolutionType != kCCResolutioniPhoneRetinaDisplay && contentScale == 2.0f) {
+                padding_.top    *= contentScale;
+                padding_.right    *= contentScale;
+                padding_.bottom    *= contentScale;
+                padding_.left    *= contentScale;
+        }
+    #endif
+
 		CCLOG(@"cocos2d: padding: %d,%d,%d,%d", padding_.left, padding_.top, padding_.right, padding_.bottom);
 	}
 
@@ -379,6 +394,21 @@ typedef struct _KerningHashElement
 	// Character xadvance
 	propertyValue = [nse nextObject];
 	characterDefinition->xAdvance = [propertyValue intValue];
+
+
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+        CGFloat     contentScale    = CC_CONTENT_SCALE_FACTOR () > 1.0f ? 2.0f : 1.0f;
+        if (resolutionType != kCCResolutioniPhoneRetinaDisplay && contentScale == 2.0f) {
+                characterDefinition->rect.origin.x      *= contentScale;
+                characterDefinition->rect.origin.y      *= contentScale;
+                characterDefinition->rect.size.width    *= contentScale;
+                characterDefinition->rect.size.height   *= contentScale;
+                characterDefinition->xOffset            *= contentScale;
+                characterDefinition->yOffset            *= contentScale;
+                characterDefinition->xAdvance           *= contentScale;
+        }
+    #endif
+
 
 	// Add the CharDef returned to the charHash
 	HASH_ADD_INT(BMFontHash_, charID, characterDefinition);

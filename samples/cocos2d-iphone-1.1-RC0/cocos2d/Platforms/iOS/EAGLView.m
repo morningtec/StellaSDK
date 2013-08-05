@@ -238,6 +238,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     }
 }
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* DEFAULT_FBO */
+- (void) bindDefaultFramebuffer
+{
+        glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ defaultFrameBuffer]);
+}
+#endif
+
 - (void) swapBuffers
 {
 	// IMPORTANT:
@@ -247,6 +254,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #ifdef __IPHONE_4_0
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 	if (multiSampling_)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
@@ -281,6 +290,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 		}
 	}
+#endif
 
 #endif // __IPHONE_4_0
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
@@ -292,8 +302,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 	if( multiSampling_ )
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, [renderer_ msaaFrameBuffer]);
+#endif
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
@@ -301,10 +314,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// define the pixel format
 	GLenum pFormat;
 
-
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined  (__APPLE__)
+#else
 	if([pixelFormat isEqualToString:@"EAGLColorFormat565"])
 		pFormat = GL_RGB565_OES;
 	else
+#endif
 		pFormat = GL_RGBA8_OES;
 
 	return pFormat;

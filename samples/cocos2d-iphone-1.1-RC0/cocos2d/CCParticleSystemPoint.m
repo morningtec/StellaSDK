@@ -121,8 +121,12 @@
 
 	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (GLvoid*) offsetof(ccPointSprite, color) );
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined  (__APPLE__)
+#else
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) offsetof(ccPointSprite, size) );
+#endif
+
 #else // Uses Vertex Array List
 	int offset = (int)vertices;
 	glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
@@ -130,9 +134,13 @@
 	int diff = offsetof(ccPointSprite, color);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (GLvoid*) (offset+diff));
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined  (__APPLE__)
+#else
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
 	diff = offsetof(ccPointSprite, size);
 	glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
+#endif
+
 #endif
 
 	BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
@@ -152,8 +160,11 @@
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined  (__APPLE__)
+#else
 	glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glDisable(GL_POINT_SPRITE_OES);
+#endif
 
 	// restore GL default state
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

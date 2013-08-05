@@ -255,16 +255,29 @@ return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %ix%i | 
 
 	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 
+    CGSize      scaledContentSize;
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    CGFloat     contentScale        = CC_CONTENT_SCALE_FACTOR () > 1.0f ? 2.0f : 1.0f;
+    if (resolution != kCCResolutioniPhoneRetinaDisplay && contentScale== 2) {
+            scaledContentSize   = CGSizeMake (CGImageGetWidth (CGImage) * contentScale, CGImageGetHeight (CGImage) * contentScale);
+    } else
+#endif
+    {
+            scaledContentSize   = CGSizeMake (CGImageGetWidth (CGImage), CGImageGetHeight (CGImage));
+    }
+
+
 #if CC_TEXTURE_NPOT_SUPPORT
 	if( [conf supportsNPOT] ) {
-		POTWide = CGImageGetWidth(CGImage);
-		POTHigh = CGImageGetHeight(CGImage);
+		POTWide = scaledContentSize.width;
+		POTHigh = scaledContentSize.height;
 
 	} else
 #endif
 	{
-		POTWide = ccNextPOT(CGImageGetWidth(CGImage));
-		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));
+		POTWide = ccNextPOT(scaledContentSize.width);
+		POTHigh = ccNextPOT(scaledContentSize.height);
 	}
     
     NSUInteger maxTextureSize = [conf maxTextureSize];
@@ -295,7 +308,7 @@ return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %ix%i | 
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
     
-	imageSize = CGSizeMake(CGImageGetWidth(CGImage), CGImageGetHeight(CGImage));
+	imageSize = CGSizeMake(scaledContentSize.width, scaledContentSize.height);
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
@@ -355,7 +368,7 @@ return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %ix%i | 
 
 	CGContextClearRect(context, CGRectMake(0, 0, POTWide, POTHigh));
 	CGContextTranslateCTM(context, 0, POTHigh - imageSize.height);
-	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(CGImage), CGImageGetHeight(CGImage)), CGImage);
+	CGContextDrawImage(context, CGRectMake(0, 0, scaledContentSize.width, scaledContentSize.height), CGImage);
 
 	// Repack the pixel data into the right format
 
@@ -715,10 +728,13 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 		GLenum format;
 		GLsizei size = length * length * bpp / 8;
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* PVRTC */
+#else
 		if(hasAlpha)
 			format = (bpp == 4) ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
 		else
 			format = (bpp == 4) ? GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+#endif
 
 		if(size < 32)
 			size = 32;

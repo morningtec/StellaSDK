@@ -76,7 +76,10 @@
 		if (multiSampling_)
 		{
 			GLint maxSamplesAllowed;
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
+#endif
 			samplesToUse_ = MIN(maxSamplesAllowed,requestedSamples);
 		}
 
@@ -97,7 +100,11 @@
 
     if(colorRenderBuffer_)
     {
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDERBUFFER */
+            glDeleteRenderbuffersIMP (1, &colorRenderBuffer_);
+    #else
         glDeleteRenderbuffersOES(1, &colorRenderBuffer_);
+    #endif
         colorRenderBuffer_ = 0;
     }
 
@@ -127,8 +134,13 @@
 
 	NSAssert( defaultFrameBuffer_, @"Can't create default frame buffer");
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDERBUFFER */
+        glGenRenderbuffersIMP (1, &colorRenderBuffer_);
+        glBindRenderbufferIMP (GL_RENDERBUFFER_OES, colorRenderBuffer_);
+#else
 	glGenRenderbuffersOES(1, &colorRenderBuffer_);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderBuffer_);
+#endif
 
 	NSAssert( colorRenderBuffer_, @"Can't create default render buffer");
 
@@ -140,11 +152,18 @@
 		CCLOG(@"failed to call context");
 	}
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDERBUFFER */
+        glFramebufferRenderbufferIMP (GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderBuffer_);
+        glGetRenderbufferParameterivIMP (GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth_);
+        glGetRenderbufferParameterivIMP (GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight_);
+#else
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderBuffer_);
-
 	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth_);
 	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight_);
+#endif
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 	if (multiSampling_)
 	{
 		/* Create the offscreen MSAA color buffer.
@@ -163,15 +182,19 @@
 		if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 			CCLOG(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 	}
+#endif
 
 	if (depthFormat_)
 	{
 		glGenRenderbuffersOES(1, &depthBuffer_);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthBuffer_);
 
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+    #else
 		if( multiSampling_ )
 			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
 		else
+    #endif
 			glRenderbufferStorageOES(GL_RENDERBUFFER_OES, depthFormat_, backingWidth_, backingHeight_);
 
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthBuffer_);

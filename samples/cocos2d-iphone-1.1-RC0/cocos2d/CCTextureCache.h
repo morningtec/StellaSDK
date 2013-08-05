@@ -27,7 +27,11 @@
 #import <Availability.h>
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined  (__APPLE__)
+#import <StellaGraphics/SGGeometry.h>
+#else
 #import <CoreGraphics/CGImage.h>
+#endif
 #endif
 
 #import <Foundation/Foundation.h>

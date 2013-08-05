@@ -30,8 +30,11 @@
 // But in case they are included, it won't be compiled.
 #import <Availability.h>
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#import <StellaAnimation/StellaAnimation.h>
+#else
 #import <QuartzCore/QuartzCore.h>
+#endif
 
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>

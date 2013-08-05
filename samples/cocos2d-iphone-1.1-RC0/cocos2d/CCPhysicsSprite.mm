@@ -20,8 +20,8 @@
  */
 
 #import "CCPhysicsSprite.h"
-#import "CGPointExtension.h"
-#import "TransformUtils.h"
+#import "Support/CGPointExtension.h"
+#import "Support/TransformUtils.h"
 #import "CCGrid.h"
 #import "CCSprite.h"
 

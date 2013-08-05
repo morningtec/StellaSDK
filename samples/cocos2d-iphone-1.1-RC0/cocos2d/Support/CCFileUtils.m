@@ -52,6 +52,25 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	NSCAssert( &*out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
 
 	size_t size = 0;
+#if defined (__STELLA_NANDROID) || defined (__STELLA_HANDROID2)
+
+    NSData * data = [NSData dataWithContentsOfFile: [NSString stringWithUTF8String: filename]];
+    if (!data) {
+            * out   = NULL;
+            return -1;
+    }
+
+    NSUInteger  len;
+    len     = [data length];
+    size    = len / sizeof (unsigned char);
+
+    unsigned char *byteData;
+    byteData    = (unsigned char *) [data bytes];
+
+    * out       = malloc (size);
+    memcpy (* out, [data bytes], len);
+
+#else
 	FILE *f = fopen(filename, "rb");
 	if( !f ) {
 		*out = NULL;
@@ -71,6 +90,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 
 	fclose(f);
+#endif
 
 	return size;
 }
@@ -194,10 +214,17 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
         }
 
 		// Retina Display ?
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && __STELLA_VERSION_MAX_ALLOWED >= 0x1201
+		if(!ret && CC_CONTENT_SCALE_FACTOR() > 1) {
+			ret = [self getPath:fullpath forSuffix:__suffixiPhoneRetinaDisplay];
+			*resolutionType = kCCResolutioniPhoneRetinaDisplay;
+		}
+#else
 		if(!ret && CC_CONTENT_SCALE_FACTOR() == 2 ) {
 			ret = [self getPath:fullpath forSuffix:__suffixiPhoneRetinaDisplay];
 			*resolutionType = kCCResolutioniPhoneRetinaDisplay;
 		}
+#endif
 	}
 
 	// If it is iPhone Non RetinaDisplay, or if the previous "getPath" failed, then use iPhone images.

@@ -92,6 +92,10 @@ typedef struct _BMFontPadding {
 
 	// values for kerning
 	struct _KerningHashElement	*kerningDictionary_;
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+	ccResolutionType        resolutionType;
+#endif
 }
 
 /** allocates a CCBMFontConfiguration with a FNT file */
@@ -148,6 +152,7 @@ typedef struct _BMFontPadding {
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	BOOL opacityModifyRGB_;
+
 }
 
 /** Purges the cached data.

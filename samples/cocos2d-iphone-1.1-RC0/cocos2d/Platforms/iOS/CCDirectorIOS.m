@@ -46,7 +46,7 @@
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 
-#import "CCLayer.h"
+#import "../../CCLayer.h"
 
 #if CC_ENABLE_PROFILERS
 #import "../../Support/CCProfiling.h"
@@ -145,6 +145,13 @@ CGFloat	__ccContentScaleFactor = 1;
 //
 - (void) drawScene
 {
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* DEFAULT_FBO */
+    [openGLView_ bindDefaultFramebuffer];
+#endif
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__STELLA_NANDROID) /* VIEWPORT */
+    glViewport(0, 0, winSizeInPixels_.width, winSizeInPixels_.height);
+#endif
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 
@@ -287,8 +294,11 @@ CGFloat	__ccContentScaleFactor = 1;
 	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
 	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
 	{
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && __STELLA_VERSION_MAX_ALLOWED < 0x1201 /* SCALEFACTOR */
+#else
 		[openGLView_ setContentScaleFactor: __ccContentScaleFactor];
 
+#endif
 		isContentScaleSupported_ = YES;
 	}
 	else
@@ -301,7 +311,11 @@ CGFloat	__ccContentScaleFactor = 1;
 -(BOOL) enableRetinaDisplay:(BOOL)enabled
 {
 	// Already enabled ?
+#if defined (__STELLA_VERSION_MAX_ALLOWED)  /* RETINA */
+	if( enabled && __ccContentScaleFactor > 1 )
+#else
 	if( enabled && __ccContentScaleFactor == 2 )
+#endif
 		return YES;
 
 	// Already disabled
@@ -313,10 +327,22 @@ CGFloat	__ccContentScaleFactor = 1;
 		return NO;
 
 	// SD device
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && __STELLA_VERSION_MAX_ALLOWED < 0x1201 /* RETINA */
+    return NO;
+#elif defined (__STELLA_VERSION_MAX_ALLOWED) /* RETINA */
+	if ([[UIScreen mainScreen] scale] <= 1.0)
+#else
 	if ([[UIScreen mainScreen] scale] == 1.0)
+#endif
 		return NO;
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && __STELLA_VERSION_MAX_ALLOWED < 0x1201 /* RETINA */
+    float newScale = 1.0f;
+#elif defined (__STELLA_VERSION_MAX_ALLOWED_NONEED) /* RETINA */
+    float newScale = enabled ? [[UIScreen mainScreen] scale] : 1;
+#else
 	float newScale = enabled ? 2 : 1;
+#endif
 	[self setContentScaleFactor:newScale];
 
 	return YES;
@@ -731,11 +757,18 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* DISPLAYLINK */
+	displayLink = [NSClassFromString(@"SADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
+#else
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
+#endif
 	[displayLink setFrameInterval:frameInterval];
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* RUNLOOP_COMMON_MODES */
+#else
     if (runLoopCommon_)
             	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     else
+#endif
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 

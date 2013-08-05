@@ -33,7 +33,11 @@
 #import <Foundation/Foundation.h>
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined  (__APPLE__)
+#import <StellaGraphics/SGGeometry.h>
+#else
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
+#endif
 #endif
 
 #import "Platforms/CCGL.h"

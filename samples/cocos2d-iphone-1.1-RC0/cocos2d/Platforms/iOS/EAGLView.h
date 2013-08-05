@@ -109,7 +109,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	id<EAGLTouchDelegate>   touchDelegate_;
 
 	//fsaa addition
-	BOOL					multisampling_;
+	BOOL					multiSampling_;
 	unsigned int			requestedSamples_;
     
     BOOL                    first_; 
@@ -146,6 +146,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 /** touch delegate */
 @property(nonatomic,readwrite,assign) id<EAGLTouchDelegate> touchDelegate;
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* DEFAULT_FBO */
+- (void) bindDefaultFramebuffer;
+#endif
 
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;

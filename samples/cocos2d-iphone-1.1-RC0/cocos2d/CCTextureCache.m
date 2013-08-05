@@ -41,6 +41,8 @@
 #import "CCActionManager.h"
 #import "CCActionInstant.h"
 
+#import "CCSpriteFrameCache.h"
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 static EAGLContext *auxGLcontext = nil;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -243,8 +245,34 @@ static CCTextureCache *sharedTextureCache;
 	asyncObject.target = target;
 	asyncObject.data = path;
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* ADDIMAGEASYNC */
+        /*CP:For now StellaSDK does not support mutlicontext , addImageWithAsyncObject*/
+        /*and we addImage on the running thread*/
+        tex = [self addImage:asyncObject.data];
+
+        if (tex) {
+                NSMutableString * plist = [NSMutableString stringWithString:asyncObject.data];
+
+            #if defined (__STELLA_NANDROID) || defined (__STELLA_HANDROID2)
+                [plist replaceOccurrencesOfString:@".pvr"
+                                       withString:@".plist"
+                                          options:NSCaseInsensitiveSearch
+                                            range:NSMakeRange(0, [plist length])];
+            #else
+                [plist replaceOccurrencesOfString:@".pvr.gz"
+                                       withString:@".plist"
+                                          options:NSCaseInsensitiveSearch
+                                            range:NSMakeRange(0, [plist length])];
+            #endif
+
+                [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:plist texture:tex];
+        }
+        [asyncObject.target performSelectorOnMainThread:asyncObject.selector withObject:tex waitUntilDone:NO];
+#else
 	[NSThread detachNewThreadSelector:@selector(addImageWithAsyncObject:) toTarget:self withObject:asyncObject];
-	[asyncObject release];
+#endif
+    [asyncObject release];
+
 }
 
 -(CCTexture2D*) addImage: (NSString*) path
@@ -269,8 +297,28 @@ static CCTextureCache *sharedTextureCache;
 		NSString *lowerCase = [path lowercaseString];
 		// all images are handled by UIImage except PVR extension that is handled by our own handler
 
-		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
-			tex = [self addPVRImage:path];
+		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] ) {
+		    #if defined (__STELLA_NANDROID) || defined (__STELLA_HANDROID2)
+
+		        /*CP: since when  android generate APK , it will auto unzip the .pvr.gz tp .pvr, so we should read the unzipped pvr*/
+		        if ([lowerCase hasSuffix:@".pvr.gz"]) {
+
+                        NSMutableString * pvrPath = [NSMutableString stringWithString: path];
+                        [pvrPath replaceOccurrencesOfString:@".pvr.gz"
+                                               withString:@".pvr"
+                                                  options:NSCaseInsensitiveSearch
+                                                    range:NSMakeRange(0, [path length])];
+
+                        tex = [self addPVRImage: pvrPath];
+		        }
+		        else
+		                tex = [self addPVRImage: path];
+
+		    #else
+                tex = [self addPVRImage: path];
+		    #endif
+		}
+
 
 		// Only iPhone
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -284,11 +332,19 @@ static CCTextureCache *sharedTextureCache;
 			ccResolutionType resolution;
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath: path resolutionType:&resolution];
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* IMAGE_REPS */
+            //			tex = nil;
+            /*CP: on android we should not convert jpg to png???(need check)*/
+			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
+			tex     = [[CCTexture2D alloc] initWithImage:jpg resolutionType:resolution];
+            [jpg release];
+#else
 			UIImage *jpg = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			UIImage *png = [[UIImage alloc] initWithData:UIImagePNGRepresentation(jpg)];
 			tex = [ [CCTexture2D alloc] initWithImage:png resolutionType:resolution];
 			[png release];
 			[jpg release];
+#endif
 
 			if( tex )
 				[textures_ setObject: tex forKey:path];
@@ -298,6 +354,7 @@ static CCTextureCache *sharedTextureCache;
 			// autorelease prevents possible crash in multithreaded environments
 			[tex autorelease];
 		}
+
 
 		else {
 

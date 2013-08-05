@@ -29,9 +29,9 @@
  */
 
 #import "CCDrawNode.h"
-#import "CGPointExtension.h"
+#import "Support/CGPointExtension.h"
 #import "ccTypes.h"
-#import "OpenGL_Internal.h"
+#import "Support/OpenGL_Internal.h"
 
 
 // ccVertex2F == CGPoint in 32-bits, but not in 64-bits (OS X)

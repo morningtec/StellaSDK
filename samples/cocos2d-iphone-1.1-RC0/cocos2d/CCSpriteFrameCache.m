@@ -124,6 +124,21 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	for(NSString *frameDictKey in framesDict) {
 		NSDictionary *frameDict = [framesDict objectForKey:frameDictKey];
 		CCSpriteFrame *spriteFrame=nil;
+
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+        CGFloat     contentScale;
+        CGFloat     scaleSize;
+        contentScale    = CC_CONTENT_SCALE_FACTOR () > 1.0f ? 2.0f : 1.0f;
+
+
+        if (resolutionType != kCCResolutioniPhoneRetinaDisplay && contentScale == 2.0f) {
+                scaleSize       = contentScale;
+        }
+        else {
+                scaleSize       = 1.0f;
+        }
+    #endif
+
 		if(format == 0) {
 			float x = [[frameDict objectForKey:@"x"] floatValue];
 			float y = [[frameDict objectForKey:@"y"] floatValue];
@@ -158,12 +173,28 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			CGPoint offset = CCPointFromString([frameDict objectForKey:@"offset"]);
 			CGSize sourceSize = CCSizeFromString([frameDict objectForKey:@"sourceSize"]);
 
+        #if defined (__STELLA_VERSION_MAX_ALLOWED)
+
+            frame.origin.x      *= scaleSize;
+            frame.origin.y      *= scaleSize;
+            frame.size.width    *= scaleSize;
+            frame.size.height   *= scaleSize;
+
+            offset.x    *= scaleSize;
+            offset.y    *= scaleSize;
+
+            sourceSize.width    *= scaleSize;
+            sourceSize.height   *= scaleSize;
+
+        #endif
+            //NSLog(@"offset:%@, sourceSize:%@, frame: %@", NSStringFromCGPoint(offset), NSStringFromCGSize(sourceSize), NSStringFromCGRect (frame));
 			// create frame
 			spriteFrame = [[CCSpriteFrame alloc] initWithTexture:texture
 													rectInPixels:frame
 														 rotated:rotated
 														  offset:offset
 													originalSize:sourceSize];
+            //NSLog(@"spriteFrame.rect: %@", NSStringFromCGRect(spriteFrame.rect));
 		} else if(format == 3) {
 			// get values
 			CGSize spriteSize = CCSizeFromString([frameDict objectForKey:@"spriteSize"]);
@@ -171,6 +202,24 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 			CGSize spriteSourceSize = CCSizeFromString([frameDict objectForKey:@"spriteSourceSize"]);
 			CGRect textureRect = CCRectFromString([frameDict objectForKey:@"textureRect"]);
 			BOOL textureRotated = [[frameDict objectForKey:@"textureRotated"] boolValue];
+
+
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+
+            spriteSize.width    *= scaleSize;
+            spriteSize.height   *= scaleSize;
+
+            spriteOffset.x      *= scaleSize;
+            spriteOffset.y      *= scaleSize;
+
+            spriteSourceSize.width    *= scaleSize;
+            spriteSourceSize.height   *= scaleSize;
+
+            textureRect.origin.x      *= scaleSize;
+            textureRect.origin.y      *= scaleSize;
+            textureRect.size.width    *= scaleSize;
+            textureRect.size.height   *= scaleSize;
+    #endif
 
 			// get aliases
 			NSArray *aliases = [frameDict objectForKey:@"aliases"];
@@ -197,7 +246,12 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture
 {
-	NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
+    NSString *path;
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    path = [CCFileUtils fullPathFromRelativePath: plist resolutionType: &resolutionType];
+#else
+    path = [CCFileUtils fullPathFromRelativePath:plist];
+#endif
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 	[self addSpriteFramesWithDictionary:dict texture:texture];
@@ -216,7 +270,12 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 -(void) addSpriteFramesWithFile:(NSString*)plist
 {
-    NSString *path = [CCFileUtils fullPathFromRelativePath:plist];
+    NSString *path;
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    path = [CCFileUtils fullPathFromRelativePath: plist resolutionType: &resolutionType];
+#else
+	path = [CCFileUtils fullPathFromRelativePath:plist];
+#endif
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
     NSString *texturePath = nil;
@@ -241,8 +300,9 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
     CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:texturePath];
 
-	if( texture )
-		[self addSpriteFramesWithDictionary:dict texture:texture];
+	if( texture ) {
+            [self addSpriteFramesWithDictionary:dict texture:texture];
+	}
 
 	else
 		CCLOG(@"cocos2d: CCSpriteFrameCache: Couldn't load texture");

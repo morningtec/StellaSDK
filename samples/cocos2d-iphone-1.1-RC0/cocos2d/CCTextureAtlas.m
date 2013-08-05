@@ -30,7 +30,7 @@
 #import "ccMacros.h"
 #import "CCTexture2D.h"
 #import "CCTextureCache.h"
-#import "CGPointExtension.h"
+#import "Support/CGPointExtension.h"
 #import "CCDrawingPrimitives.h"
 
 

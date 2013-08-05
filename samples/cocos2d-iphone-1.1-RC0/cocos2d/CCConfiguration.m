@@ -146,9 +146,12 @@ static char * glExtensions;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 		if( OSVersion_ >= kCCiOSVersion_4_0 )
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
 		else
+#endif
 			maxSamplesAllowed_ = 0;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);

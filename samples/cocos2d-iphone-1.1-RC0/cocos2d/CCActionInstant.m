@@ -277,6 +277,7 @@
 -(void) dealloc
 {
 	[targetCallback_ release];
+	targetCallback_  = nil;     /* WC - to prevent from probing */
 	[super dealloc];
 }
 

@@ -50,6 +50,11 @@
 {
 	NSMutableDictionary *spriteFrames_;
 	NSMutableDictionary *spriteFramesAliases_;
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+	ccResolutionType        resolutionType;
+#endif
+
 }
 
 /** Retruns ths shared instance of the Sprite Frame cache */

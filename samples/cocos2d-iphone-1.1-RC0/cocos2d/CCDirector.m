@@ -35,7 +35,7 @@
 #import "CCScheduler.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import "CCTouchDispatcher.h"
+#import "Platforms/iOS/CCTouchDispatcher.h"
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "CCEventDispatcher.h"
 #endif

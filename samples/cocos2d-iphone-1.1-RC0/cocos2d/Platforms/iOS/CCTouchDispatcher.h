@@ -32,7 +32,7 @@
 
 #import "CCTouchDelegateProtocol.h"
 #import "EAGLView.h"
-#import "CCArray.h"			// CCArray
+#import "../../Support/CCArray.h"			// CCArray
 #import "../../ccMacros.h"	// CCLOG
 
 
