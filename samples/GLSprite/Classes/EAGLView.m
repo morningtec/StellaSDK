@@ -133,16 +133,31 @@ Copyright (C) 2009 Apple Inc. All Rights Reserved.
 - (BOOL)createFramebuffer
 {
 	glGenFramebuffersOES(1, &viewFramebuffer);
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
 	glGenRenderbuffersIMP(1, &viewRenderbuffer);
+#else
+	glGenRenderbuffersOES(1, &viewRenderbuffer);
+#endif
 	
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
 	glBindRenderbufferIMP(GL_RENDERBUFFER_OES, viewRenderbuffer);
+#else
+	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
+#endif
 	[context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(id<EAGLDrawable>)self.layer];
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
 	glFramebufferRenderbufferIMP(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, viewRenderbuffer);
-	
+
 	glGetRenderbufferParameterivIMP(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
 	glGetRenderbufferParameterivIMP(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+#else
+	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, viewRenderbuffer);
 	
+	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
+	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);
+#endif
+
 	if(glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES) {
 		NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
 		return NO;
@@ -156,7 +171,11 @@ Copyright (C) 2009 Apple Inc. All Rights Reserved.
 {
 	glDeleteFramebuffersOES(1, &viewFramebuffer);
 	viewFramebuffer = 0;
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
 	glDeleteRenderbuffersIMP(1, &viewRenderbuffer);
+#else
+	glDeleteRenderbuffersOES(1, &viewRenderbuffer);
+#endif
 	viewRenderbuffer = 0;
 	
 	if(depthRenderbuffer) {
@@ -320,9 +339,9 @@ const GLshort spriteTexcoords[] = {
 	[EAGLContext setCurrentContext:context];
 	
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
-#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
-    glViewport (0, 0, backingWidth, backingHeight);
-#endif
+//#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+////    glViewport (0, 0, backingWidth, backingHeight);
+//#endif
 	glRotatef(3.0f, 0.0f, 0.0f, 1.0f);
 	
 	glClear(GL_COLOR_BUFFER_BIT);
