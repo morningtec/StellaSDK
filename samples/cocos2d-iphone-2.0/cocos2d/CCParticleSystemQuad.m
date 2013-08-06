@@ -167,6 +167,9 @@
 
 -(void) initVAO
 {
+#ifdef __STELLA_VERSION_MAX_ALLOWED
+#warning "overriding draw method instand of VAO to support android"
+#else
 	// VAO requires GL_APPLE_vertex_array_object in order to be created on a different thread
 	// https://devforums.apple.com/thread/145566?tstart=0
 	
@@ -208,6 +211,7 @@
 		createVAO();
 	else 
 		[cocos2dThread performBlock:createVAO waitUntilDone:YES];
+#endif
 }
 
 -(void) dealloc
@@ -217,7 +221,10 @@
 		free(indices_);
 
 		glDeleteBuffers(2, &buffersVBO_[0]);
+#ifdef __STELLA_VERSION_MAX_ALLOWED
+#else
 		glDeleteVertexArrays(1, &VAOname_);
+#endif
 	}
 
 	[super dealloc];
@@ -414,6 +421,9 @@
 // overriding draw method
 -(void) draw
 {
+#ifdef __STELLA_VERSION_MAX_ALLOWED
+    [super draw];
+#else
 	NSAssert(!batchNode_,@"draw should not be called when added to a particleBatchNode");
 
 	CC_NODE_DRAW_SETUP();
@@ -432,6 +442,7 @@
 	CC_INCREMENT_GL_DRAWS(1);
 
 	CHECK_GL_ERROR_DEBUG();
+#endif
 }
 
 -(void) setBatchNode:(CCParticleBatchNode *)batchNode
@@ -467,7 +478,10 @@
 			indices_ = NULL;
 
 			glDeleteBuffers(2, &buffersVBO_[0]);
+#ifdef __STELLA_VERSION_MAX_ALLOWED
+#else
 			glDeleteVertexArrays(1, &VAOname_);
+#endif
 		}
 	}
 }

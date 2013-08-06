@@ -288,8 +288,25 @@ static CCTextureCache *sharedTextureCache;
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
 
-		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
-			tex = [self addPVRImage:path];
+		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] ) {
+
+            #if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+                /*CP: since when  android generate APK , it will auto unzip the .pvr.gz tp .pvr, so we should read the unzipped pvr*/
+                if ([lowerCase hasSuffix:@".pvr.gz"]) {
+                        NSMutableString * pvrPath = [NSMutableString stringWithString: path];
+                        [pvrPath replaceOccurrencesOfString:@".pvr.gz"
+                                                 withString:@".pvr"
+                                                    options:NSCaseInsensitiveSearch
+                                                      range:NSMakeRange(0, [path length])];
+
+                        tex = [self addPVRImage: pvrPath];
+                }
+                else
+                        tex = [self addPVRImage: path];
+            #else
+                tex = [self addPVRImage:path];
+            #endif
+		}
 
 #ifdef __CC_PLATFORM_IOS
 

@@ -501,7 +501,11 @@ typedef struct _FontDefHashElement
 
 	if( fntFile ) {
 		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
+	#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+		NSAssert1( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
+	#else
 		NSAssert( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
+	#endif
 
 		configuration_ = [newConf retain];
     
@@ -902,8 +906,12 @@ typedef struct _FontDefHashElement
 	if( fntFile != fntFile_ ) {
 		
 		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
-		
+
+	#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+		NSAssert1( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
+	#else
 		NSAssert( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
+	#endif
 		
 		[fntFile_ release];
 		fntFile_ = [fntFile retain];

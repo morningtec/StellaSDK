@@ -70,7 +70,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../ccMacros.h"
 #ifdef __CC_PLATFORM_IOS
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* HEADER */
+#import <StellaGraphics/StellaGraphics.h>
+#import <StellaAnimation/StellaAnimation.h>
+#else
 #import <QuartzCore/QuartzCore.h>
+#endif
+
 
 #import "CCGLView.h"
 #import "CCES2Renderer.h"
@@ -227,6 +233,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
+// #if defined (__STELLA_VERSION_MAX_ALLOWED) /* DEFAULT_FBO */
+// - (void) bindDefaultFramebuffer
+// {
+//         glBindFramebuffer(GL_FRAMEBUFFER,  [renderer_ defaultFrameBuffer]);
+// }
+// #endif
+
 - (void) swapBuffers
 {
 	// IMPORTANT:
@@ -234,6 +247,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	//	-> context_ MUST be the OpenGL context
 	//	-> renderbuffer_ must be the the RENDER BUFFER
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 	if (multiSampling_)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
@@ -242,7 +257,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
+#endif
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* DISCARD_FRAMEBUFFER */
+#else
 	if( discardFramebufferSupported_)
 	{
 		if (multiSampling_)
@@ -268,14 +286,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
 		}
 	}
+#endif
 
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 	if( multiSampling_ )
 		glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);
+#endif
 
 	CHECK_GL_ERROR_DEBUG();
 }

@@ -31,6 +31,10 @@
 #import "../ccConfig.h"
 #import "../ccTypes.h"
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+#import <dispatch/dispatch.h>
+#endif
+
 enum {
 	kCCiPhone,
 	kCCiPhoneRetinaDisplay,
@@ -46,6 +50,25 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	NSCAssert( &*out, @"ccLoadFileIntoMemory: invalid 'out' parameter");
 	
 	size_t size = 0;
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+
+    NSData * data = [NSData dataWithContentsOfFile: [NSString stringWithUTF8String: filename]];
+    if (!data) {
+            * out   = NULL;
+            return -1;
+    }
+
+    NSUInteger  len;
+    len     = [data length];
+    size    = len / sizeof (unsigned char);
+
+    unsigned char *byteData;
+    byteData    = (unsigned char *) [data bytes];
+
+    * out       = malloc (size);
+    memcpy (* out, [data bytes], len);
+
+#else
 	FILE *f = fopen(filename, "rb");
 	if( !f ) {
 		*out = NULL;
@@ -65,6 +88,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 	
 	fclose(f);
+#endif
 	
 	return size;
 }

@@ -373,6 +373,9 @@
 
 -(BOOL)saveToFile:(NSString*)fileName format:(tCCImageFormat)format
 {
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* UIIMAGE */
+    return NO;
+#else
 	BOOL success;
 	
 	NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
@@ -431,6 +434,7 @@
 		CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk",fullPath);
 
 	return success;
+#endif
 }
 
 
@@ -438,6 +442,9 @@
 
 -(UIImage *) getUIImage
 {
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* UIIMAGE */
+    return nil;
+#else
 	CGImageRef imageRef = [self newCGImage];
 	
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
@@ -445,6 +452,7 @@
 	CGImageRelease( imageRef );
 
 	return [image autorelease];
+#endif
 }
 #endif // __CC_PLATFORM_IOS
 @end

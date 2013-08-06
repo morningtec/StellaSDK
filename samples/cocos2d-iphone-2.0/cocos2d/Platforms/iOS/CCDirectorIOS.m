@@ -142,6 +142,10 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	CCGLView *openGLview = (CCGLView*)[self view];
 
+// #if defined (__STELLA_VERSION_MAX_ALLOWED) /* DEFAULT_FBO */
+//     [openGLview bindDefaultFramebuffer];
+// #endif
+
 	[EAGLContext setCurrentContext: [openGLview context]];
 
 	/* tick before glClear: issue #533 */
@@ -284,7 +288,11 @@ CGFloat	__ccContentScaleFactor = 1;
 -(BOOL) enableRetinaDisplay:(BOOL)enabled
 {
 	// Already enabled ?
+#if defined (__STELLA_VERSION_MAX_ALLOWED)  /* RETINA */
+        if( enabled && __ccContentScaleFactor > 1 )
+#else
 	if( enabled && __ccContentScaleFactor == 2 )
+#endif
 		return YES;
 
 	// Already disabled
@@ -296,10 +304,15 @@ CGFloat	__ccContentScaleFactor = 1;
 		return NO;
 
 	// SD device
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* RETINA */
+	if ([[UIScreen mainScreen] scale] <= 1.0)
+#else
 	if ([[UIScreen mainScreen] scale] == 1.0)
+#endif
 		return NO;
 
 	float newScale = enabled ? 2 : 1;
+
 	[self setContentScaleFactor:newScale];
 
 	// Load Hi-Res FPS label

@@ -144,6 +144,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** touch delegate */
 @property(nonatomic,readwrite,assign) id<CCTouchDelegate> touchDelegate;
 
+// #if defined (__STELLA_VERSION_MAX_ALLOWED) /* DEFAULT_FBO */
+// - (void) bindDefaultFramebuffer;
+// #endif
+
 /** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
 

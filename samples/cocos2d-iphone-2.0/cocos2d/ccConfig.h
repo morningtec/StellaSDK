@@ -181,7 +181,11 @@
  
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* VAO */
+#define CC_TEXTURE_ATLAS_USE_VAO 0
+#else
 #define CC_TEXTURE_ATLAS_USE_VAO 1
+#endif
 #endif
 
 

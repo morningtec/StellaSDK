@@ -111,9 +111,12 @@ static char * glExtensions;
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTextureUnits_ );
 
 #ifdef __CC_PLATFORM_IOS
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 		if( OSVersion_ >= kCCiOSVersion_4_0 )
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
 		else
+#endif
 			maxSamplesAllowed_ = 0;
 #elif defined(__CC_PLATFORM_MAC)
 		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);

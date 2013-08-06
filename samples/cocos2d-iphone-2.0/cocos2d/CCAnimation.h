@@ -26,7 +26,11 @@
 
 #import <Foundation/Foundation.h>
 #ifdef __CC_PLATFORM_IOS
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#import <StellaGraphics/SGGeometry.h>
+#else
 #import <CoreGraphics/CoreGraphics.h>
+#endif
 #endif // IPHONE
 
 @class CCSpriteFrame;

@@ -27,7 +27,16 @@
 #import "ccMacros.h"
 
 #ifdef __CC_PLATFORM_IOS
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+#import <dispatch/dispatch.h>
+#endif
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* HEADER */
+#import <StellaGraphics/SGImage.h>
+#else
 #import <CoreGraphics/CGImage.h>
+#endif
 #endif
 
 #import <Foundation/Foundation.h>

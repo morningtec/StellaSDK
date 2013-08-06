@@ -31,7 +31,12 @@
 #import "../../ccMacros.h"
 #ifdef __CC_PLATFORM_IOS
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* HEADER */
+#import <StellaGraphics/StellaGraphics.h>
+#import <StellaAnimation/StellaAnimation.h>
+#else
 #import <QuartzCore/QuartzCore.h>
+#endif
 
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>

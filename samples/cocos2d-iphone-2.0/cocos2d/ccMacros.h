@@ -28,6 +28,11 @@
 #import "ccConfig.h"
 
 #import <Foundation/Foundation.h>
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#import <StellaGraphics/StellaGraphics.h>
+#else
+#import <CoreGraphics/CoreGraphics.h>
+#endif
 #import <Availability.h>
 
 /**
@@ -35,7 +40,7 @@
  cocos2d helper macros
  */
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED) /* STELLA */
 #define __CC_PLATFORM_IOS 1
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #define __CC_PLATFORM_MAC 1
@@ -220,7 +225,7 @@ do {															\
  On Mac it returns 1;
  On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
  */
-extern float __ccContentScaleFactor;
+extern CGFloat  __ccContentScaleFactor;
 #define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
 
 

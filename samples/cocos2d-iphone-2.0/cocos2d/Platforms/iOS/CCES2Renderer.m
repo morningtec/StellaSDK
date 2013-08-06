@@ -69,13 +69,24 @@
         glGenFramebuffers(1, &defaultFramebuffer_);
 		NSAssert( defaultFramebuffer_, @"Can't create default frame buffer");
 
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDER BUFFER */
+            glGenRenderbuffersIMP (1, &colorRenderbuffer_);
+    #else
         glGenRenderbuffers(1, &colorRenderbuffer_);
+    #endif
 		NSAssert( colorRenderbuffer_, @"Can't create default render buffer");
 
         glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDER BUFFER */
+            glBindRenderbufferIMP (GL_RENDERBUFFER, colorRenderbuffer_);
+            glFramebufferRenderbufferIMP (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
+    #else
         glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
+    #endif
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 		if (multiSampling_)
 		{
 			GLint maxSamplesAllowed;
@@ -88,6 +99,7 @@
 			glBindFramebuffer(GL_FRAMEBUFFER, msaaFramebuffer_);
 			
 		}
+#endif
 
 		CHECK_GL_ERROR_DEBUG();
     }
@@ -98,16 +110,27 @@
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {
 	// Allocate color buffer backing based on the current layer size
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDER BUFFER */
+        glBindRenderbufferIMP (GL_RENDERBUFFER, colorRenderbuffer_);
+#else
 	glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
+#endif
 
 	if( ! [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
 		CCLOG(@"failed to call context");
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDER BUFFER */
+        glGetRenderbufferParameterivIMP(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
+        glGetRenderbufferParameterivIMP(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
+#else
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
+#endif
 
 	CCLOG(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 	if (multiSampling_)
 	{
 		if ( msaaColorbuffer_) {
@@ -136,6 +159,7 @@
 			return NO;
 		}
 	}
+#endif
 
 	CHECK_GL_ERROR();
 
@@ -148,15 +172,22 @@
 
 		glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer_);
 		
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MSAA */
+#else
 		if( multiSampling_ )
 			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
 		else
+#endif
 			glRenderbufferStorage(GL_RENDERBUFFER, depthFormat_, backingWidth_, backingHeight_);
 
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
 
 		// bind color buffer
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* RENDER BUFFER */
+            glBindRenderbufferIMP (GL_RENDERBUFFER, colorRenderbuffer_);
+    #else
 		glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);		
+    #endif
 	}
 
 	CHECK_GL_ERROR();
@@ -212,7 +243,11 @@
     }
 
     if (colorRenderbuffer_) {
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* BUFFER RENDER */
+            glDeleteRenderbuffersIMP (1, &colorRenderbuffer_);
+    #else
         glDeleteRenderbuffers(1, &colorRenderbuffer_);
+    #endif
         colorRenderbuffer_ = 0;
     }
 

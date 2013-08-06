@@ -47,7 +47,11 @@
 #import "ccMacros.h"
 
 #ifdef __CC_PLATFORM_IOS
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#import <StellaGraphics/SGGeometry.h>
+#else
 #import <CoreGraphics/CGGeometry.h>
+#endif
 #elif defined(__CC_PLATFORM_MAC)
 #import <Foundation/Foundation.h>
 #endif

@@ -25,7 +25,11 @@
 #define __NEON_MATRIX_IMPL_H__
 
 #ifdef __arm__
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /*android arm/arch.h*/
+/*android don't have arm/arch.h but it defines __arm__*/
+#else
 #include "arm/arch.h"
+#endif
 #endif
 
 // Matrixes are assumed to be stored in column major format according to OpenGL

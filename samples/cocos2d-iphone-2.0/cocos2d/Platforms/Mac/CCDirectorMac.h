@@ -30,6 +30,14 @@
 #ifdef __CC_PLATFORM_MAC
 
 #import <QuartzCore/CVDisplayLink.h>
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* HEADER */
+#import <StellaGraphics/StellaGraphics.h>
+#import <StellaAnimation/SADisplayLink.h>
+#else
+#import <QuartzCore/CVDisplayLink.h>
+#endif
+
 #import "../../CCDirector.h"
 
 @class CCEventDispatcher;
