@@ -339,9 +339,6 @@ const GLshort spriteTexcoords[] = {
 	[EAGLContext setCurrentContext:context];
 	
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
-//#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
-////    glViewport (0, 0, backingWidth, backingHeight);
-//#endif
 	glRotatef(3.0f, 0.0f, 0.0f, 1.0f);
 	
 	glClear(GL_COLOR_BUFFER_BIT);
