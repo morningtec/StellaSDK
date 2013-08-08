@@ -53,9 +53,9 @@ extern int main_handroid_pre (void * param);
         main_android_pre (param);
         main_android (0, NULL);
 }
-#endif
-@end
 
+@end
+#endif
 
 #else /* none defined */
 
