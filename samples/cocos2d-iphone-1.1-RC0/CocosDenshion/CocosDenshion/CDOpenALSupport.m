@@ -45,8 +45,268 @@
 
 #import "CDOpenALSupport.h"
 #import "CocosDenshion.h"
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#import "SMSTBVorbis+Stella.h"
+
+/* WC - see http://www.gamedev.net/community/forums/topic.asp?topic_id=505152&whichpage=1&#3296091
+to be replaced with alure */
+
+typedef struct _BasicWAVEHeader {
+        char              riff[4];        // 'RIFF'
+        unsigned int      riffSize;
+        char              wave[4];        // 'WAVE'
+
+        char              fmt[4];         // 4 'fmt '
+        unsigned int      fmtSize;        // 4
+
+        unsigned short    format;         // 2
+        unsigned short    channels;       // 2
+        unsigned int      sampleRate;     // 4
+        unsigned int      byteRate;       // 4
+        unsigned short    blockAlign;     // 2
+        unsigned short    bitsPerSample;  // 2
+} BasicWAVEHeader;
+
+typedef struct _CDWaveChunkHeader {
+        char                chunkID[4];   // 'data'
+        uint32_t            chunkSize;
+} CDWaveChunkHeader;
+
+typedef struct _CDWaveRIFFChunk {
+        CDWaveChunkHeader       header;
+        char                    format[4];
+
+} CDWaveRIFFChunk;
+
+typedef struct _CDWaveFormatChunk {
+        CDWaveChunkHeader       header;
+
+        unsigned short          audioFormat;   
+        unsigned short          numChannels;   
+        unsigned int            sampleRate;    
+        unsigned int            byteRate;      
+        unsigned short          blockAlign;    
+        unsigned short          bitsPerSample; 
+} CDWaveFormatChunk;
+
+
+
+void * CDAllocWaveAudioData (NSString * path, ALsizei * outDataSize, ALenum * outDataFormat, ALsizei * outSampleRate)
+{
+        CDLOG (@"dataFromPath: %@", path);
+
+        NSData    * data; 
+        data        = [NSData dataWithContentsOfFile: path];
+        if (! data) {
+                return NULL;
+        }
+
+        // SGDebugLog (@"SSSoundEngine", @"data: %@", data);
+
+        // BasicWAVEHeader       * header;
+        // header      = (BasicWAVEHeader *) [data bytes];
+
+        CDWaveChunkHeader     * header;
+        header      = (CDWaveChunkHeader *) [data bytes];
+
+        if (memcmp (header->chunkID, "RIFF", 4)) {
+                CDLOG (@"CocosDenshion: chunk header not valid: riff");
+                return NULL;
+        }
+
+        CDWaveRIFFChunk       * riffChunk   = (CDWaveRIFFChunk *) header;
+        if (memcmp (riffChunk->format, "WAVE", 4)) {
+                CDLOG (@"CocosDenshion: chunk header not valid: riff/wave");
+                return NULL;
+        }
+        // SGDebugLog (@"SSSoundEngine", @"found riff/wave chunk: %d bytes", header->chunkSize);
+
+
+        header  = (CDWaveChunkHeader *) ((unsigned char *) header + sizeof (CDWaveChunkHeader) + 4);
+        if (memcmp (header->chunkID, "fmt ", 4)) {
+                CDLOG (@"CocosDenshion: chunk header not valid: fmt");
+                return NULL;
+        }
+        // SGDebugLog (@"SSSoundEngine", @"found fmt chunk: %d bytes", header->chunkSize);
+
+        CDWaveFormatChunk     * formatChunk     = (CDWaveFormatChunk *) header;
+
+
+        while (YES) {
+                CDLOG (@"skipping %d + %d bytes", sizeof (CDWaveChunkHeader), header->chunkSize);
+                header  = (CDWaveChunkHeader *) ((unsigned char *) header + sizeof (CDWaveChunkHeader) + header->chunkSize);
+                        if (! memcmp (header->chunkID, "FLLR", 4)) {
+                        continue;
+                }
+
+                if (! memcmp (header->chunkID, "data", 4)) {
+                        break;
+                }
+
+                CDLOG (@"unknown chunk header: %c%c%c%c", 
+                header->chunkID[0], header->chunkID[1], header->chunkID[2], header->chunkID[3] );
+
+                return NULL;
+        }
+
+        CDLOG (@"found data chunk: %d bytes", header->chunkSize);
+
+        unsigned char     * buffer;
+        buffer  = (unsigned char *) malloc (header->chunkSize);
+
+        memcpy (buffer,  (unsigned char *) header + sizeof (CDWaveChunkHeader),  header->chunkSize);
+        // [data getBytes: buffer range: NSMakeRange (sizeof (header), header->dataSize)];
+
+        if (outDataSize) {
+                *outDataSize      = header->chunkSize;
+        }
+
+        if (outDataFormat) {
+                 if (formatChunk->bitsPerSample == 16) {
+                         *outDataFormat  = (formatChunk->numChannels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+                 }
+                 else {
+                         *outDataFormat  = (formatChunk->numChannels == 1) ? AL_FORMAT_MONO8 : AL_FORMAT_STEREO8;
+                 }
+        }
+
+        if (outSampleRate) {
+             *outSampleRate    = formatChunk->sampleRate;
+        }
+
+        return buffer;
+}
+
+
+ /* ref link: https://gist.github.com/965399 */
+
+typedef struct {
+        stb_vorbis    * stream;
+        stb_vorbis_info info;
+
+
+        size_t          bufferSize;
+        size_t          totalSamplesLeft;
+
+} SMOggAudioStream;
+
+
+
+
+void * CDAllocOggAudioData (NSString * path, ALsizei * outDataSize, ALenum * outDataFormat, ALsizei * outSampleRate)
+{
+        CDLOG(@"%@", path);
+
+        //init 
+        SMOggAudioStream    * oggStream;
+        oggStream           = (SMOggAudioStream *) malloc (sizeof (SMOggAudioStream));
+
+        // 
+        // alGenSources (1, & oggStream->source );
+        // alGenBuffers (2, oggStream->buffers );
+
+        //oggStream->bufferSize   = 4096*8;
+
+
+        //open file        
+        NSData    * data; 
+        data        = [NSData dataWithContentsOfFile: path];
+        if (! data) {
+             free (oggStream);
+             return NO;
+        }
+
+        int                 dataLength   = [data length];
+        unsigned char     * dataBytes    = (unsigned char *)[data bytes];
+        int                 error;         
+
+
+        oggStream->stream = stb_vorbis_open_memory (dataBytes, dataLength, &error, NULL);   /* WC - to handle error */
+
+        if (!oggStream->stream) {
+             CDLOG (@"Load OggStream Error: 0x%x", error);               
+             [data release];
+             free (oggStream);
+             return NO;
+        }
+
+        CDLOG (@"Load OggStream Success");                
+
+        oggStream->info                 = stb_vorbis_get_info (oggStream->stream);
+        oggStream->totalSamplesLeft     = stb_vorbis_stream_length_in_samples (oggStream->stream) * oggStream->info.channels;
+
+        oggStream->bufferSize           = oggStream->totalSamplesLeft;
+
+
+        ALshort         * pcm;
+        pcm  = (ALshort *) malloc (oggStream->bufferSize * sizeof (ALshort));
+        if (pcm == NULL) {
+             return NO;
+        }
+
+        NSUInteger      size    = 0;
+        NSUInteger      result  = 0;
+
+
+
+        while (size < oggStream->bufferSize){
+
+             result      = stb_vorbis_get_samples_short_interleaved (oggStream->stream, oggStream->info.channels, pcm+size, 4096*8);
+
+             if (result <= 0)        break;
+             size       += result * oggStream->info.channels;
+        }
+
+
+        if (size == 0) {
+             return NO;
+        }
+
+        CDLOG (@"totalSamplesLeft: %d, read %d", oggStream->totalSamplesLeft, size);
+        oggStream->totalSamplesLeft     -= size;
+
+
+        if (outDataSize) {
+             *outDataSize    = size * sizeof (ALshort);
+        }
+
+        if (outDataFormat) {
+             /* WC - assuming bits per sample == 16 */
+             *outDataFormat  = (oggStream->info.channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+        }
+
+        if (outSampleRate) {
+             *outSampleRate  = oggStream->info.sample_rate;
+        }
+
+        CDLOG (@"totalSamplesLeft: %d, read %d", oggStream->totalSamplesLeft, size);
+
+        return pcm;
+}
+
+
+void * CDGetOpenALAudioData (NSString * path, ALsizei * outDataSize, ALenum * outDataFormat, ALsizei * outSampleRate)
+{    
+        //SGDebugLog (@"SDUtilities", @"SDGetOpenALAudioData: %@", path);
+        //SGDebugLog (@"SDUtilities", @"SDGetOpenALAudioData: ext: %@", [path pathExtension]);
+
+        NSString    * fileType;
+        fileType    = [path pathExtension];
+
+        if ([fileType isEqualToString: @"wav"]) {
+                return CDAllocWaveAudioData (path, outDataSize, outDataFormat, outSampleRate);
+        } 
+        else if ([fileType isEqualToString: @"ogg"]) {
+                return CDAllocOggAudioData (path, outDataSize, outDataFormat, outSampleRate);
+        }
+        else {
+                return nil;
+        }
+}
+#else
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
+
 
 //Taken from oalTouch MyOpenALSupport 1.1
 void* CDloadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate)
@@ -247,4 +507,5 @@ void* CDGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 		return CDloadCafAudioData(inFileURL, outDataSize, outDataFormat, outSampleRate);
 	}
 }
+#endif
 

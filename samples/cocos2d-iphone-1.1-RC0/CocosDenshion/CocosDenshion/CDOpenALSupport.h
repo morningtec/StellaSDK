@@ -64,9 +64,17 @@ extern "C" {
 
 
 //Taken from oalTouch MyOpenALSupport 1.1
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#import <Foundation/Foundation.h>
+void * CDAllocWaveAudioData (NSString * path, ALsizei * outDataSize, ALenum * outDataFormat, ALsizei * outSampleRate);
+void * CDAllocOggAudioData (NSString * path, ALsizei * outDataSize, ALenum * outDataFormat, ALsizei * outSampleRate);
+void * CDGetOpenALAudioData (NSString * path, ALsizei * outDataSize, ALenum * outDataFormat, ALsizei * outSampleRate);
+#else
 void* CDloadWaveAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei*	outSampleRate);
 void* CDloadCafAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate);
 void* CDGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei* outSampleRate);
+#endif
+
 
 #ifdef __cplusplus
 }

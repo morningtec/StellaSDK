@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50DFC2960FF627B6007E7827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		50DFC2970FF627B6007E7827 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		50DFC2980FF627B6007E7827 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
-		50DFC2990FF627B6007E7827 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
-		50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		50DFC2CB0FF62843007E7827 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DFC2CA0FF62843007E7827 /* HelloWorld.m */; };
 		5644D10817A912CA00417DC4 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D00917A910F700417DC4 /* CCAction.m */; };
 		5644D10917A912CA00417DC4 /* CCActionCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D00B17A910F700417DC4 /* CCActionCamera.m */; };
@@ -89,9 +84,93 @@
 		5644D15217A9154900417DC4 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0B317A910F800417DC4 /* TransformUtils.m */; };
 		5644D15317A9154900417DC4 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0B717A910F800417DC4 /* ZipUtils.m */; };
 		5644D15517A9191900417DC4 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 5644D15417A9191200417DC4 /* fps_images.png */; };
-		5644D15617A9199400417DC4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		5644D24817AA321900417DC4 /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03A17A910F800417DC4 /* CCLabelBMFont.m */; };
 		5644D2A817AA675A00417DC4 /* MarkerFelt.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 5644D2A617AA675400417DC4 /* MarkerFelt.ttc */; };
+		5644D56117AB47C200417DC4 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 5644D15417A9191200417DC4 /* fps_images.png */; };
+		5644D56217AB47C200417DC4 /* MarkerFelt.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 5644D2A617AA675400417DC4 /* MarkerFelt.ttc */; };
+		5644D56417AB47C200417DC4 /* CCDirectorIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08B17A910F800417DC4 /* CCDirectorIOS.m */; };
+		5644D56517AB47C200417DC4 /* CCTouchDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08E17A910F800417DC4 /* CCTouchDispatcher.m */; };
+		5644D56617AB47C200417DC4 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0A217A910F800417DC4 /* base64.c */; };
+		5644D56717AB47C200417DC4 /* CCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0A517A910F800417DC4 /* CCArray.m */; };
+		5644D56817AB47C200417DC4 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0A817A910F800417DC4 /* CCFileUtils.m */; };
+		5644D56917AB47C200417DC4 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0AA17A910F800417DC4 /* CCProfiling.m */; };
+		5644D56A17AB47C200417DC4 /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0AB17A910F800417DC4 /* ccUtils.c */; };
+		5644D56B17AB47C200417DC4 /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0AE17A910F800417DC4 /* CGPointExtension.m */; };
+		5644D56C17AB47C200417DC4 /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0B117A910F800417DC4 /* TGAlib.m */; };
+		5644D56D17AB47C200417DC4 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0B317A910F800417DC4 /* TransformUtils.m */; };
+		5644D56E17AB47C200417DC4 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D0B717A910F800417DC4 /* ZipUtils.m */; };
+		5644D56F17AB47C200417DC4 /* CCTouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D09017A910F800417DC4 /* CCTouchHandler.m */; };
+		5644D57017AB47C200417DC4 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D09217A910F800417DC4 /* EAGLView.m */; };
+		5644D57117AB47C200417DC4 /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D09417A910F800417DC4 /* ES1Renderer.m */; };
+		5644D57217AB47C200417DC4 /* glu.c in Sources */ = {isa = PBXBuildFile; fileRef = 5644D09617A910F800417DC4 /* glu.c */; };
+		5644D57317AB47C200417DC4 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D00917A910F700417DC4 /* CCAction.m */; };
+		5644D57417AB47C200417DC4 /* CCActionCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D00B17A910F700417DC4 /* CCActionCamera.m */; };
+		5644D57517AB47C200417DC4 /* CCActionEase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D00D17A910F700417DC4 /* CCActionEase.m */; };
+		5644D57617AB47C200417DC4 /* CCActionGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D00F17A910F700417DC4 /* CCActionGrid.m */; };
+		5644D57717AB47C200417DC4 /* CCActionGrid3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01117A910F700417DC4 /* CCActionGrid3D.m */; };
+		5644D57817AB47C200417DC4 /* CCActionInstant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01317A910F700417DC4 /* CCActionInstant.m */; };
+		5644D57917AB47C200417DC4 /* CCActionInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01517A910F700417DC4 /* CCActionInterval.m */; };
+		5644D57A17AB47C200417DC4 /* CCActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01717A910F700417DC4 /* CCActionManager.m */; };
+		5644D57B17AB47C200417DC4 /* CCActionPageTurn3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01917A910F700417DC4 /* CCActionPageTurn3D.m */; };
+		5644D57C17AB47C200417DC4 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01B17A910F700417DC4 /* CCActionProgressTimer.m */; };
+		5644D57D17AB47C200417DC4 /* CCActionTiledGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01D17A910F700417DC4 /* CCActionTiledGrid.m */; };
+		5644D57E17AB47C200417DC4 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D01F17A910F700417DC4 /* CCActionTween.m */; };
+		5644D57F17AB47C200417DC4 /* CCAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D02117A910F700417DC4 /* CCAnimation.m */; };
+		5644D58017AB47C200417DC4 /* CCAnimationCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D02317A910F700417DC4 /* CCAnimationCache.m */; };
+		5644D58117AB47C200417DC4 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D02517A910F700417DC4 /* CCAtlasNode.m */; };
+		5644D58217AB47C200417DC4 /* CCBlockSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D02717A910F800417DC4 /* CCBlockSupport.m */; };
+		5644D58317AB47C200417DC4 /* CCCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D02917A910F800417DC4 /* CCCamera.m */; };
+		5644D58417AB47C200417DC4 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D02C17A910F800417DC4 /* CCConfiguration.m */; };
+		5644D58517AB47C200417DC4 /* CCDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D02E17A910F800417DC4 /* CCDirector.m */; };
+		5644D58617AB47C200417DC4 /* CCDrawingPrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03017A910F800417DC4 /* CCDrawingPrimitives.m */; };
+		5644D58717AB47C200417DC4 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03217A910F800417DC4 /* CCDrawNode.m */; };
+		5644D58817AB47C200417DC4 /* CCGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03417A910F800417DC4 /* CCGrabber.m */; };
+		5644D58917AB47C200417DC4 /* HelloWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DFC2CA0FF62843007E7827 /* HelloWorld.m */; };
+		5644D58A17AB47C200417DC4 /* CCGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03617A910F800417DC4 /* CCGrid.m */; };
+		5644D58B17AB47C200417DC4 /* CCLabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03817A910F800417DC4 /* CCLabelAtlas.m */; };
+		5644D58C17AB47C200417DC4 /* CCLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03C17A910F800417DC4 /* CCLabelTTF.m */; };
+		5644D58D17AB47C200417DC4 /* CCLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03E17A910F800417DC4 /* CCLayer.m */; };
+		5644D58E17AB47C200417DC4 /* CCMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04117A910F800417DC4 /* CCMenu.m */; };
+		5644D58F17AB47C200417DC4 /* CCMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04317A910F800417DC4 /* CCMenuItem.m */; };
+		5644D59017AB47C200417DC4 /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04517A910F800417DC4 /* CCMotionStreak.m */; };
+		5644D59117AB47C200417DC4 /* CCNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04717A910F800417DC4 /* CCNode.m */; };
+		5644D59217AB47C200417DC4 /* CCParallaxNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04917A910F800417DC4 /* CCParallaxNode.m */; };
+		5644D59317AB47C200417DC4 /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04B17A910F800417DC4 /* CCParticleBatchNode.m */; };
+		5644D59417AB47C200417DC4 /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04D17A910F800417DC4 /* CCParticleExamples.m */; };
+		5644D59517AB47C200417DC4 /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D04F17A910F800417DC4 /* CCParticleSystem.m */; };
+		5644D59617AB47C200417DC4 /* CCParticleSystemPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D05117A910F800417DC4 /* CCParticleSystemPoint.m */; };
+		5644D59717AB47C200417DC4 /* CCParticleSystemQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D05317A910F800417DC4 /* CCParticleSystemQuad.m */; };
+		5644D59817AB47C200417DC4 /* CCPhysicsDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D05517A910F800417DC4 /* CCPhysicsDebugNode.m */; };
+		5644D59917AB47C200417DC4 /* CCPhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5644D05717A910F800417DC4 /* CCPhysicsSprite.mm */; };
+		5644D59A17AB47C200417DC4 /* CCProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D05917A910F800417DC4 /* CCProgressTimer.m */; };
+		5644D59B17AB47C200417DC4 /* CCRenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D05C17A910F800417DC4 /* CCRenderTexture.m */; };
+		5644D59C17AB47C200417DC4 /* CCRibbon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D05E17A910F800417DC4 /* CCRibbon.m */; };
+		5644D59D17AB47C200417DC4 /* CCScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06017A910F800417DC4 /* CCScene.m */; };
+		5644D59E17AB47C200417DC4 /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D03A17A910F800417DC4 /* CCLabelBMFont.m */; };
+		5644D59F17AB47C200417DC4 /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06217A910F800417DC4 /* CCScheduler.m */; };
+		5644D5A017AB47C200417DC4 /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06417A910F800417DC4 /* CCSprite.m */; };
+		5644D5A117AB47C200417DC4 /* CCSpriteBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06617A910F800417DC4 /* CCSpriteBatchNode.m */; };
+		5644D5A217AB47C200417DC4 /* CCSpriteFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06817A910F800417DC4 /* CCSpriteFrame.m */; };
+		5644D5A317AB47C200417DC4 /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06A17A910F800417DC4 /* CCSpriteFrameCache.m */; };
+		5644D5A417AB47C200417DC4 /* CCTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06C17A910F800417DC4 /* CCTexture2D.m */; };
+		5644D5A517AB47C200417DC4 /* CCTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D06E17A910F800417DC4 /* CCTextureAtlas.m */; };
+		5644D5A617AB47C200417DC4 /* CCTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07017A910F800417DC4 /* CCTextureCache.m */; };
+		5644D5A717AB47C200417DC4 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07217A910F800417DC4 /* CCTexturePVR.m */; };
+		5644D5A817AB47C200417DC4 /* CCTileMapAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07417A910F800417DC4 /* CCTileMapAtlas.m */; };
+		5644D5A917AB47C200417DC4 /* CCTMXLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07617A910F800417DC4 /* CCTMXLayer.m */; };
+		5644D5AA17AB47C200417DC4 /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07817A910F800417DC4 /* CCTMXObjectGroup.m */; };
+		5644D5AB17AB47C200417DC4 /* CCTMXTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07A17A910F800417DC4 /* CCTMXTiledMap.m */; };
+		5644D5AC17AB47C200417DC4 /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07C17A910F800417DC4 /* CCTMXXMLParser.m */; };
+		5644D5AD17AB47C200417DC4 /* CCTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D07E17A910F800417DC4 /* CCTransition.m */; };
+		5644D5AE17AB47C200417DC4 /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08017A910F800417DC4 /* CCTransitionPageTurn.m */; };
+		5644D5AF17AB47C200417DC4 /* CCTransitionRadial.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08217A910F800417DC4 /* CCTransitionRadial.m */; };
+		5644D5B017AB47C200417DC4 /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08517A910F800417DC4 /* cocos2d.m */; };
+		5644D5BE17AB47E300417DC4 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D4E917AB47A900417DC4 /* CDAudioManager.m */; };
+		5644D5BF17AB47E900417DC4 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D4EC17AB47A900417DC4 /* CDOpenALSupport.m */; };
+		5644D5C017AB47E900417DC4 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D4EE17AB47A900417DC4 /* CocosDenshion.m */; };
+		5644D5C117AB47E900417DC4 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D4F017AB47A900417DC4 /* SimpleAudioEngine.m */; };
+		5644D5C217AB481100417DC4 /* DenshionDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D4FA17AB47A900417DC4 /* DenshionDemo.m */; };
+		5644D5C317AB481300417DC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D50117AB47A900417DC4 /* main.m */; };
 		5644D5C617AB482500417DC4 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 5644D15417A9191200417DC4 /* fps_images.png */; };
 		5644D5C717AB482500417DC4 /* MarkerFelt.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 5644D2A617AA675400417DC4 /* MarkerFelt.ttc */; };
 		5644D5CB17AB482500417DC4 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D4EC17AB47A900417DC4 /* CDOpenALSupport.m */; };
@@ -174,12 +253,6 @@
 		5644D61917AB482500417DC4 /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08017A910F800417DC4 /* CCTransitionPageTurn.m */; };
 		5644D61A17AB482500417DC4 /* CCTransitionRadial.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08217A910F800417DC4 /* CCTransitionRadial.m */; };
 		5644D61B17AB482500417DC4 /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D08517A910F800417DC4 /* cocos2d.m */; };
-		5644D61D17AB482500417DC4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		5644D61E17AB482500417DC4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		5644D61F17AB482500417DC4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
-		5644D62017AB482500417DC4 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
-		5644D62117AB482500417DC4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
-		5644D62217AB482500417DC4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		5644D62917AB487800417DC4 /* HelloWorldScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D53417AB47A900417DC4 /* HelloWorldScene.m */; };
 		5644D62A17AB487B00417DC4 /* FancyRatMeteringDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D53217AB47A900417DC4 /* FancyRatMeteringDemoAppDelegate.m */; };
 		5644D62B17AB487E00417DC4 /* DebugAudioVis.m in Sources */ = {isa = PBXBuildFile; fileRef = 5644D53017AB47A900417DC4 /* DebugAudioVis.m */; };
@@ -492,6 +565,7 @@
 		5644D55B17AB47AA00417DC4 /* sprites.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sprites.plist; sourceTree = "<group>"; };
 		5644D55C17AB47AA00417DC4 /* sprites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sprites.png; sourceTree = "<group>"; };
 		5644D55D17AB47AA00417DC4 /* TomTheTurret_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TomTheTurret_Prefix.pch; sourceTree = "<group>"; };
+		5644D5BB17AB47C200417DC4 /* DrumPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrumPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5644D5BD17AB47C300417DC4 /* HelloWorldSample copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HelloWorldSample copy-Info.plist"; path = "/Project/Stella/cocos2d-iphone-1.1-RC0/HelloWorldSample copy-Info.plist"; sourceTree = "<absolute>"; };
 		5644D62617AB482500417DC4 /* FancyRatMetering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FancyRatMetering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5644D62817AB482500417DC4 /* DrumPad copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DrumPad copy-Info.plist"; path = "/Project/Stella/cocos2d-iphone-1.1-RC0/DrumPad copy-Info.plist"; sourceTree = "<absolute>"; };
@@ -502,12 +576,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50DFC2960FF627B6007E7827 /* Foundation.framework in Frameworks */,
-				50DFC2970FF627B6007E7827 /* UIKit.framework in Frameworks */,
-				50DFC2980FF627B6007E7827 /* CoreGraphics.framework in Frameworks */,
-				50DFC2990FF627B6007E7827 /* OpenGLES.framework in Frameworks */,
-				50DFC29A0FF627B6007E7827 /* QuartzCore.framework in Frameworks */,
-				5644D15617A9199400417DC4 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5644D5B117AB47C200417DC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,12 +590,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5644D61D17AB482500417DC4 /* Foundation.framework in Frameworks */,
-				5644D61E17AB482500417DC4 /* UIKit.framework in Frameworks */,
-				5644D61F17AB482500417DC4 /* CoreGraphics.framework in Frameworks */,
-				5644D62017AB482500417DC4 /* OpenGLES.framework in Frameworks */,
-				5644D62117AB482500417DC4 /* QuartzCore.framework in Frameworks */,
-				5644D62217AB482500417DC4 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +600,7 @@
 			isa = PBXGroup;
 			children = (
 				50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */,
+				5644D5BB17AB47C200417DC4 /* DrumPad.app */,
 				5644D62617AB482500417DC4 /* FancyRatMetering.app */,
 			);
 			name = Products;
@@ -549,6 +619,7 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				5644D5BD17AB47C300417DC4 /* HelloWorldSample copy-Info.plist */,
 				5644D62817AB482500417DC4 /* DrumPad copy-Info.plist */,
+				44c8ac815d441c0857db1085 /* Resources */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -575,6 +646,13 @@
 				503092B210447296005F7AFC /* libz.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		44c8ac815d441c0857db1085 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		501756090F335CE900624901 /* external */ = {
@@ -1117,11 +1195,24 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = HelloWorldSample;
-			productName = "HelloWorldSample";
+			productName = "demo-rotate-world";
 			productReference = 50DFC29F0FF627B6007E7827 /* HelloWorldSample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5644D55F17AB47C200417DC4 /* DrumPad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5644D5B817AB47C200417DC4 /* Build configuration list for PBXNativeTarget "DrumPad" */;
+			buildPhases = (
+				5644D56017AB47C200417DC4 /* Resources */,
+				5644D56317AB47C200417DC4 /* Sources */,
+				5644D5B117AB47C200417DC4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			name = DrumPad;
+			productName = "demo-rotate-world";
+			productReference = 5644D5BB17AB47C200417DC4 /* DrumPad.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5644D5C417AB482500417DC4 /* FancyRatMetering */ = {
@@ -1134,10 +1225,8 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = FancyRatMetering;
-			productName = "FancyRatMetering";
+			productName = "demo-rotate-world";
 			productReference = 5644D62617AB482500417DC4 /* FancyRatMetering.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -1149,7 +1238,7 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "template" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "template-mac-debug" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -1165,6 +1254,7 @@
 			targets = (
 				50DFC2870FF627B6007E7827 /* HelloWorldSample */,
 				5644D5C417AB482500417DC4 /* FancyRatMetering */,
+				5644D55F17AB47C200417DC4 /* DrumPad */,
 			);
 		};
 /* End PBXProject section */
@@ -1176,6 +1266,15 @@
 			files = (
 				5644D15517A9191900417DC4 /* fps_images.png in Resources */,
 				5644D2A817AA675A00417DC4 /* MarkerFelt.ttc in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5644D56017AB47C200417DC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5644D56117AB47C200417DC4 /* fps_images.png in Resources */,
+				5644D56217AB47C200417DC4 /* MarkerFelt.ttc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1278,6 +1377,96 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5644D56317AB47C200417DC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5644D5C217AB481100417DC4 /* DenshionDemo.m in Sources */,
+				5644D5C317AB481300417DC4 /* main.m in Sources */,
+				5644D5BF17AB47E900417DC4 /* CDOpenALSupport.m in Sources */,
+				5644D5C017AB47E900417DC4 /* CocosDenshion.m in Sources */,
+				5644D5C117AB47E900417DC4 /* SimpleAudioEngine.m in Sources */,
+				5644D5BE17AB47E300417DC4 /* CDAudioManager.m in Sources */,
+				5644D56417AB47C200417DC4 /* CCDirectorIOS.m in Sources */,
+				5644D56517AB47C200417DC4 /* CCTouchDispatcher.m in Sources */,
+				5644D56617AB47C200417DC4 /* base64.c in Sources */,
+				5644D56717AB47C200417DC4 /* CCArray.m in Sources */,
+				5644D56817AB47C200417DC4 /* CCFileUtils.m in Sources */,
+				5644D56917AB47C200417DC4 /* CCProfiling.m in Sources */,
+				5644D56A17AB47C200417DC4 /* ccUtils.c in Sources */,
+				5644D56B17AB47C200417DC4 /* CGPointExtension.m in Sources */,
+				5644D56C17AB47C200417DC4 /* TGAlib.m in Sources */,
+				5644D56D17AB47C200417DC4 /* TransformUtils.m in Sources */,
+				5644D56E17AB47C200417DC4 /* ZipUtils.m in Sources */,
+				5644D56F17AB47C200417DC4 /* CCTouchHandler.m in Sources */,
+				5644D57017AB47C200417DC4 /* EAGLView.m in Sources */,
+				5644D57117AB47C200417DC4 /* ES1Renderer.m in Sources */,
+				5644D57217AB47C200417DC4 /* glu.c in Sources */,
+				5644D57317AB47C200417DC4 /* CCAction.m in Sources */,
+				5644D57417AB47C200417DC4 /* CCActionCamera.m in Sources */,
+				5644D57517AB47C200417DC4 /* CCActionEase.m in Sources */,
+				5644D57617AB47C200417DC4 /* CCActionGrid.m in Sources */,
+				5644D57717AB47C200417DC4 /* CCActionGrid3D.m in Sources */,
+				5644D57817AB47C200417DC4 /* CCActionInstant.m in Sources */,
+				5644D57917AB47C200417DC4 /* CCActionInterval.m in Sources */,
+				5644D57A17AB47C200417DC4 /* CCActionManager.m in Sources */,
+				5644D57B17AB47C200417DC4 /* CCActionPageTurn3D.m in Sources */,
+				5644D57C17AB47C200417DC4 /* CCActionProgressTimer.m in Sources */,
+				5644D57D17AB47C200417DC4 /* CCActionTiledGrid.m in Sources */,
+				5644D57E17AB47C200417DC4 /* CCActionTween.m in Sources */,
+				5644D57F17AB47C200417DC4 /* CCAnimation.m in Sources */,
+				5644D58017AB47C200417DC4 /* CCAnimationCache.m in Sources */,
+				5644D58117AB47C200417DC4 /* CCAtlasNode.m in Sources */,
+				5644D58217AB47C200417DC4 /* CCBlockSupport.m in Sources */,
+				5644D58317AB47C200417DC4 /* CCCamera.m in Sources */,
+				5644D58417AB47C200417DC4 /* CCConfiguration.m in Sources */,
+				5644D58517AB47C200417DC4 /* CCDirector.m in Sources */,
+				5644D58617AB47C200417DC4 /* CCDrawingPrimitives.m in Sources */,
+				5644D58717AB47C200417DC4 /* CCDrawNode.m in Sources */,
+				5644D58817AB47C200417DC4 /* CCGrabber.m in Sources */,
+				5644D58917AB47C200417DC4 /* HelloWorld.m in Sources */,
+				5644D58A17AB47C200417DC4 /* CCGrid.m in Sources */,
+				5644D58B17AB47C200417DC4 /* CCLabelAtlas.m in Sources */,
+				5644D58C17AB47C200417DC4 /* CCLabelTTF.m in Sources */,
+				5644D58D17AB47C200417DC4 /* CCLayer.m in Sources */,
+				5644D58E17AB47C200417DC4 /* CCMenu.m in Sources */,
+				5644D58F17AB47C200417DC4 /* CCMenuItem.m in Sources */,
+				5644D59017AB47C200417DC4 /* CCMotionStreak.m in Sources */,
+				5644D59117AB47C200417DC4 /* CCNode.m in Sources */,
+				5644D59217AB47C200417DC4 /* CCParallaxNode.m in Sources */,
+				5644D59317AB47C200417DC4 /* CCParticleBatchNode.m in Sources */,
+				5644D59417AB47C200417DC4 /* CCParticleExamples.m in Sources */,
+				5644D59517AB47C200417DC4 /* CCParticleSystem.m in Sources */,
+				5644D59617AB47C200417DC4 /* CCParticleSystemPoint.m in Sources */,
+				5644D59717AB47C200417DC4 /* CCParticleSystemQuad.m in Sources */,
+				5644D59817AB47C200417DC4 /* CCPhysicsDebugNode.m in Sources */,
+				5644D59917AB47C200417DC4 /* CCPhysicsSprite.mm in Sources */,
+				5644D59A17AB47C200417DC4 /* CCProgressTimer.m in Sources */,
+				5644D59B17AB47C200417DC4 /* CCRenderTexture.m in Sources */,
+				5644D59C17AB47C200417DC4 /* CCRibbon.m in Sources */,
+				5644D59D17AB47C200417DC4 /* CCScene.m in Sources */,
+				5644D59E17AB47C200417DC4 /* CCLabelBMFont.m in Sources */,
+				5644D59F17AB47C200417DC4 /* CCScheduler.m in Sources */,
+				5644D5A017AB47C200417DC4 /* CCSprite.m in Sources */,
+				5644D5A117AB47C200417DC4 /* CCSpriteBatchNode.m in Sources */,
+				5644D5A217AB47C200417DC4 /* CCSpriteFrame.m in Sources */,
+				5644D5A317AB47C200417DC4 /* CCSpriteFrameCache.m in Sources */,
+				5644D5A417AB47C200417DC4 /* CCTexture2D.m in Sources */,
+				5644D5A517AB47C200417DC4 /* CCTextureAtlas.m in Sources */,
+				5644D5A617AB47C200417DC4 /* CCTextureCache.m in Sources */,
+				5644D5A717AB47C200417DC4 /* CCTexturePVR.m in Sources */,
+				5644D5A817AB47C200417DC4 /* CCTileMapAtlas.m in Sources */,
+				5644D5A917AB47C200417DC4 /* CCTMXLayer.m in Sources */,
+				5644D5AA17AB47C200417DC4 /* CCTMXObjectGroup.m in Sources */,
+				5644D5AB17AB47C200417DC4 /* CCTMXTiledMap.m in Sources */,
+				5644D5AC17AB47C200417DC4 /* CCTMXXMLParser.m in Sources */,
+				5644D5AD17AB47C200417DC4 /* CCTransition.m in Sources */,
+				5644D5AE17AB47C200417DC4 /* CCTransitionPageTurn.m in Sources */,
+				5644D5AF17AB47C200417DC4 /* CCTransitionRadial.m in Sources */,
+				5644D5B017AB47C200417DC4 /* cocos2d.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5644D5C817AB482500417DC4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1377,22 +1566,32 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Project/Stella/Encore/StellaAPK/mac-debug/usr/frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/X11/include";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
+				INSTALL_PATH = "/Project/Stella/Encore/StellaAPK/mac-debug/Applications";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/X11/lib";
+				OTHER_CFLAGS = "-D__STELLA_VERSION_MAX_ALLOWED";
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-framework",
 					Foundation,
+					"-lfreetype",
 					"-framework",
-					UIKit,
+					StellaKit,
+					"-ObjC",
+					"-lz",
+					"-framework",
+					StellaGraphics,
+					"-lGL",
+					"-lX11",
 				);
 				PRODUCT_NAME = HelloWorldSample;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -1400,21 +1599,97 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "/Project/Stella/Encore/StellaAPK/mac-debug/usr/frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/X11/include";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
+				INSTALL_PATH = "/Project/Stella/Encore/StellaAPK/mac-debug/Applications";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/X11/lib";
+				OTHER_CFLAGS = "-D__STELLA_VERSION_MAX_ALLOWED";
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-framework",
 					Foundation,
+					"-lfreetype",
 					"-framework",
-					UIKit,
+					StellaKit,
+					"-ObjC",
+					"-lz",
+					"-framework",
+					StellaGraphics,
+					"-lGL",
+					"-lX11",
 				);
 				PRODUCT_NAME = HelloWorldSample;
+				SDKROOT = macosx10.7;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		5644D5B917AB47C200417DC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Project/Stella/Encore/StellaAPK/mac-debug/usr/frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/X11/include";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "/Project/Stella/Encore/StellaAPK/mac-debug/Applications";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/X11/lib";
+				OTHER_CFLAGS = "-D__STELLA_VERSION_MAX_ALLOWED";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-lfreetype",
+					"-framework",
+					StellaKit,
+					"-ObjC",
+					"-lz",
+					"-framework",
+					StellaGraphics,
+					"-lGL",
+					"-lX11",
+				);
+				PRODUCT_NAME = DrumPad;
+				SDKROOT = macosx10.7;
+			};
+			name = Debug;
+		};
+		5644D5BA17AB47C200417DC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "/Project/Stella/Encore/StellaAPK/mac-debug/usr/frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/X11/include";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "/Project/Stella/Encore/StellaAPK/mac-debug/Applications";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/X11/lib";
+				OTHER_CFLAGS = "-D__STELLA_VERSION_MAX_ALLOWED";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-lfreetype",
+					"-framework",
+					StellaKit,
+					"-ObjC",
+					"-lz",
+					"-framework",
+					StellaGraphics,
+					"-lGL",
+					"-lX11",
+				);
+				PRODUCT_NAME = DrumPad;
+				SDKROOT = macosx10.7;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1423,28 +1698,43 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Project/Stella/Encore/StellaAPK/mac-debug/usr/frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/X11/include";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
+				INSTALL_PATH = "/Project/Stella/Encore/StellaAPK/mac-debug/Applications";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/X11/lib";
+				OTHER_CFLAGS = (
+					"-D__STELLA_VERSION_MAX_ALLOWED",
+					"-D__IPHONE_OS_VERSION_MAX_ALLOWED",
+				);
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-framework",
 					Foundation,
-					"-framework",
-					UIKit,
-					"-framework",
-					AVFoundation,
 					"-framework",
 					OpenAL,
 					"-framework",
 					AudioToolbox,
+					"-framework",
+					StellaMedia,
+					"-framework",
+					AppKit,
+					"-framework",
+					StellaKit,
+					"-ObjC",
+					"-lfreetype",
+					"-framework",
+					StellaGraphics,
+					"-lz",
+					"-lGL",
+					"-lX11",
 				);
 				PRODUCT_NAME = FancyRatMetering;
+				SDKROOT = macosx10.7;
 			};
 			name = Debug;
 		};
@@ -1452,27 +1742,42 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "/Project/Stella/Encore/StellaAPK/mac-debug/usr/frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/X11/include";
 				INFOPLIST_FILE = Resources/Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
+				INSTALL_PATH = "/Project/Stella/Encore/StellaAPK/mac-debug/Applications";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/X11/lib";
+				OTHER_CFLAGS = (
+					"-D__STELLA_VERSION_MAX_ALLOWED",
+					"-D__IPHONE_OS_VERSION_MAX_ALLOWED",
+				);
 				OTHER_LDFLAGS = (
-					"-ObjC",
 					"-framework",
 					Foundation,
-					"-framework",
-					UIKit,
-					"-framework",
-					AVFoundation,
 					"-framework",
 					OpenAL,
 					"-framework",
 					AudioToolbox,
+					"-framework",
+					StellaMedia,
+					"-framework",
+					AppKit,
+					"-framework",
+					StellaKit,
+					"-ObjC",
+					"-lfreetype",
+					"-framework",
+					StellaGraphics,
+					"-lz",
+					"-lGL",
+					"-lX11",
 				);
 				PRODUCT_NAME = FancyRatMetering;
+				SDKROOT = macosx10.7;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1481,9 +1786,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMPRESS_PNG_FILES = YES;
+				DSTROOT = /;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
@@ -1496,11 +1801,8 @@
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
-				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
-				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1509,8 +1811,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				ONLY_ACTIVE_ARCH = YES;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				OTHER_LDFLAGS = "";
+				SDKROOT = macosx10.7;
+				SYMROOT = "build-mac";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1519,9 +1822,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMPRESS_PNG_FILES = YES;
+				DSTROOT = /;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_FAST_MATH = YES;
@@ -1533,12 +1836,9 @@
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
-				"GCC_THUMB_SUPPORT[arch=armv6]" = NO;
-				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_UNROLL_LOOPS = YES;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1546,8 +1846,9 @@
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				OTHER_LDFLAGS = "";
+				SDKROOT = macosx10.7;
+				SYMROOT = "build-mac";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1564,6 +1865,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		5644D5B817AB47C200417DC4 /* Build configuration list for PBXNativeTarget "DrumPad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5644D5B917AB47C200417DC4 /* Debug */,
+				5644D5BA17AB47C200417DC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5644D62317AB482500417DC4 /* Build configuration list for PBXNativeTarget "FancyRatMetering" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1573,7 +1883,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "template" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "template-mac-debug" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

@@ -69,7 +69,10 @@ Requirements:
 
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#else
 #import <AudioToolbox/AudioToolbox.h>
+#endif
 #import <Foundation/Foundation.h>
 #import "CDConfig.h"
 

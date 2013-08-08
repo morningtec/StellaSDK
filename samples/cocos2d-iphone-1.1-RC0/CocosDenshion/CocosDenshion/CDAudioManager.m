@@ -317,10 +317,14 @@ static BOOL configured = FALSE;
 }
 
 -(BOOL) isOtherAudioPlaying {
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    return NO;
+#else
 	UInt32 isPlaying = 0;
 	UInt32 varSize = sizeof(isPlaying);
 	AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
 	return (isPlaying != 0);
+#endif
 }
 
 -(void) setMode:(tAudioManagerMode) mode {
@@ -399,7 +403,10 @@ static BOOL configured = FALSE;
 
 		//Initialise the audio session
 		AVAudioSession* session = [AVAudioSession sharedInstance];
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+    #else
 		session.delegate = self;
+    #endif
 
 		_mode = mode;
 		backgroundMusicCompletionSelector = nil;
@@ -468,7 +475,9 @@ static BOOL configured = FALSE;
 //ringer mute switch to off (i.e. enables sound) therefore polling is the only reliable way to
 //determine ringer switch state
 -(BOOL) isDeviceMuted {
-
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    return NO;
+#else
 #if TARGET_IPHONE_SIMULATOR
 	//Calling audio route stuff on the simulator causes problems
 	return NO;
@@ -494,6 +503,7 @@ static BOOL configured = FALSE;
 
 		return (newDeviceIsMuted == kCFCompareEqualTo);
 	}
+#endif
 #endif
 }
 
