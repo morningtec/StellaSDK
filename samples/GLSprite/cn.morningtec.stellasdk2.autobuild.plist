@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>cn.morningtec.stellasdk2.autobuild</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Project/Stella/Debut/release-engineering/autobuild.sh</string>
+        <string>--tags</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+          <key>Minute</key>
+          <integer>00</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/autobuild.out</string>
+    <key>UserName</key>
+    <string>wc</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>AbandonProcessGroup</key>
+    <true/>
+</dict>
+</plist>
