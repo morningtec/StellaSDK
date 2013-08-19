@@ -1,0 +1,10 @@
+build
+build-mac
+build-arm-google-android
+
+*.sib
+*-mac.xcodeproj
+*-android.xcodeproj
+*-android
+
+
