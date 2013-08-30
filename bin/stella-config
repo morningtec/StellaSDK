@@ -35,6 +35,7 @@ Commands in:
                 if opt in ('--install'):
                         home_folder     = os.path.expanduser('~');
 
+                        stella_helper.install_submodules ();
                         stella_helper.install_pbcompspecs (home_folder);
                         stella_helper.install_bash_profile (home_folder);
                         stella_helper.switch_es_mode ('es1');
