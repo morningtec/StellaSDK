@@ -1,0 +1,66 @@
+#!/usr/bin/python
+
+import os;
+import sys;
+import getopt;
+import stella_helper;
+
+
+def main (argv):
+        try:
+                opts, args  = \
+                getopt.getopt (argv, '', ['switch=', 'install', 'fix-assets', 'setup-cocos2dv1-template=', 'setup-cocos2dv2-template=']);
+
+        except getopt.GetoptError:
+                print ('''
+Usage: release.py [command]\n
+Commands in:
+    --switch=es1|es2
+    --install
+    --fix-assets
+    --setup-cocos2dv1-template=<name>
+    --setup-cocos2dv2-template=<name>
+''');
+
+                sys.exit (255);
+
+        for opt, arg in opts:
+                if opt in ('--switch'):
+                        if (not arg == 'es1') and (not arg == 'es2'): continue;
+
+                        stella_helper.switch_es_mode (arg);
+                        break;
+
+
+                if opt in ('--install'):
+                        home_folder     = os.path.expanduser('~');
+
+                        stella_helper.install_pbcompspecs (home_folder);
+                        stella_helper.install_bash_profile (home_folder);
+                        stella_helper.switch_es_mode ('es1');
+
+                        print ('Please restart Xcode and Terminal after installation ...');
+                        break;
+
+                if opt in ('--fix-assets'):
+                        stella_helper.fix_assets (os.getcwd ());
+                        break;
+
+                if opt in ('--setup-cocos2dv1-template'):
+                        if arg == '': arg = 'sample';
+                        stella_helper.setup_cocos2dv1_template (os.getcwd (), arg);
+                        break;
+
+                if opt in ('--setup-cocos2dv2-template'):
+                        if arg == '': arg = 'sample';
+                        stella_helper.setup_cocos2dv2_template (os.getcwd (), arg);
+                        break;
+
+
+        sys.exit (0);
+
+
+if __name__ == "__main__":
+        main (sys.argv[1:])
+
+
