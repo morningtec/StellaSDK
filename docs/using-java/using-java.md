@@ -1,9 +1,11 @@
 
-## Using Java in Stella SDK
+## Using Stella SDK Features
 
 ### At a glance
 
-While Stella SDK is an Objective-C framework, Android development features many third-party APIs that are Java-based. Stella SDK Pro offers a JNIHelper class that provides a means of two-way communication between Objective-C and Java. This allows Objective-C developers to leverage third-party APIs in their apps quickly.
+While Stella SDK is an Objective-C framework, Android development features many third-party APIs that are Java-based. Stella SDK Pro offers a JNIHelper class that provides a means of two-way communication between Objective-C and Java. This allows Objective-C developers to leverage third-party Java APIs in their apps quickly.
+
+This tutorial demonstrates the concept of JNIHelper architecture and explains how to use JNIHelper with some of the built-in Java features of Stella SDK.
 
 
 ### JNIHelper architecture
@@ -17,11 +19,11 @@ Apps made with Stella SDK utilises Android NDK’s Activity class to achieve hig
             UIApplicationMain (argc, argv, nil, nil);
     }
 
-Understanding the separation between the __JVM thread__ and __Stella thread__ is critical when integrating Java functions in Stella Apps. In principal, native events and drawings (Objective-C) shall always happen in Stella thread and Java function calls shall always happen in JVM thread. The JNIHelper smooths the communication between native and Java functions.
+Understanding the separation between the __Android UI thread__ and __Stella thread__ is critical when integrating Java functions in Stella Apps. In principal, native events and drawings (Objective-C) shall always happen in Stella thread and Java function calls shall always happen in JVM thread. The JNIHelper smooths the communication between native and Java functions.
 
 Conceptually the communication can be both ways. Suppose the native side initiates an action, the sequence of events are described as follows:
 
-| Stella thread                    | JVM thread
+| Stella thread                    | Android UI thread
 | -                                | -
 | native: initiate call to Java    |
 | Java: run command on UI thread   |
@@ -45,34 +47,99 @@ Now, in Xcode, open MainWindow.xib, and add a button and message label to it. Pr
 
 ![Building the interface](jnihelper-xib.png)
 
-When the button is pressed, a message is initated in __Stella thread__ to Java on the native side in `-[AppDelegate sendMessageToJava]`:
+When the button is pressed, a message is initated in the __Stella thread__, which uses `JNIHelper` to send message to Java:
 
-    #if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
-        [[JNIHelper sharedHelper] sendMessageToJava];
-    #endif
+    - (IBAction) sendMessageToJava
+    {
+        #if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+            [[JNIHelper sharedHelper] sendMessageToJava];
+        #endif
+    }
 
-JNIHelper is a singleton object which calls `MainHActivity::sendMessage` Java method:
-
-    (*self.env)->CallStaticObjectMethod (self.env, classID_MainHActivity, methodID_sendMessage);
-
-
-When Java receives the message, it performs callback to native on the `sendMessage` method in the __JVM thread__:
-
-     _sharedMainHActivity.runOnUiThread (new Runnable () {
-             @Override
-             public void run () {
-                     nativeCallbackMessage (message);
-             }
-     });
+    - (void) sendMessageToJava: (NSString *) message
+    {
+            /* ... */
+            (*self.env)->CallStaticObjectMethod ( self.env,
+                classID_MainHActivity,
+                methodID_sendMessage );
+    }
 
 
-callback is then caught on native side in `MainHActivity_nativeCallbackMessage` method, which forwards it to be processed again in __Stella thread__:
+Java receives the message in the __Stella thread__. Usually some UI changes are involved in Java side, such as displaying a dialog. Such actions must be performed in the __Android UI thread__, in which native callbacks are usually performed afterwrds:
 
-    [[JNIHelper sharedHelper] performSelectorOnMainThread: @selector(callbackMessage:) withObject: message waitUntilDone: NO];
+    public static void sendMessage (String message)
+    {
+            _sharedMainHActivity.runOnUiThread (new Runnable () {
+                    @Override
+                    public void run () {
+                            /* (Android UI actions) ... */
+                            nativeCallbackMessage (message);
+                    }
+            });
+    }
 
-Finally such call back is forward again to `-[AppDelegate receivedMessageFromJava:]' which updates the message label:
 
-    _messageLabel.text      = message;
+After the callback in the __Android UI thread__ is caught, Stella UI changes (e.g. label text modification below) are then performed in the __Stella thread__:
+
+    void Java_com_yourcompany_features_MainHActivity_nativeCallbackMessage (JNIEnv * env, jobject thiz, jstring str_message)
+    {
+            /* ... */
+            [[JNIHelper sharedHelper] performSelectorOnMainThread: @selector(callbackMessage:) withObject: message waitUntilDone: NO];
+    }
+
+    - (void) receivedMessageFromJava: (NSString *) message
+    {
+            _messageLabel.text      = message;
+    }
+
+
+
+### BillingSDK at a glance
+
+Stella SDK comes with a BillingSDK that uses Java to send SMS billing requests. The BillingSDK is targeting at apps published in Chinese Android markets. To ease the development, a mock interface is provided which can be replaced by functional ones depending on the Android market that the app is to be published.
+
+#### Using BillingSDK
+
+BillingSDK can be used stand-alone or together with StellaSDK using JNIHelper. First create a button that calls to Java:
+
+![Building the interface](dobilling-xib.png)
+
+On the native side, the button calls to Java upon clicking
+
+    - (IBAction) doBilling
+    {
+        #if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+            [[JNIHelper sharedHelper] doBilling];
+        #endif
+    }
+
+On the Java side, set paypoint info and just launch `doBilling ()` with a callback. The BillingSDK will handle the rest.
+
+    public static void doBilling ()
+    {
+            BillingManager.setBillingInfo (this, "pay_point_1_NAME", "item1");
+            BillingManager.setBillingInfo (this, "pay_point_1_PRICE", "2");
+
+            BillingManager.doBilling (this, "pay_point_1", new BillingCallback () {
+                    @Override
+                    public void onBillingSuccess () {
+                            Toast.makeText (MainHActivity.this, "billing successful", Toast.LENGTH_SHORT).show ();
+                    }
+
+                    @Override
+                    public void onBillingFail () {
+                            Toast.makeText (MainHActivity.this, "billing failed", Toast.LENGTH_SHORT).show ();
+                    }
+
+                    @Override
+                    public void onBillingCancel () {
+                            Toast.makeText (MainHActivity.this, "billing cancelled", Toast.LENGTH_SHORT).show ();
+                    }
+            });
+    }
+
+
+
 
 
 ### Complete sample
@@ -80,15 +147,15 @@ Finally such call back is forward again to `-[AppDelegate receivedMessageFromJav
 A complete sample can be found at in Stella SDK Features test, which can be installed on Android device:
 
     $ stella-config --switch=es1
-    $ cd /opt/StellaSDK/samples/Features/Resource/en.lproj
-    $ sibtool -x MainWindow.xib
-    
+
     $ cd /opt/StellaSDK/samples/Features
+    $ sibtool -x Resources/en.lproj/MainWindow.xib
+
     $ xcgen --project Features --target android --es1
     $ open Features-android.xcodeproj
 
 After building in xcodeproj, install the test on Android:
-    
+
     $ cd Features-android
     $ stella-config --fix-assets
     $ android update project -p . -s --target android-10 --name Features

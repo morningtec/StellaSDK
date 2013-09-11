@@ -21,6 +21,7 @@
  * xcgen retains xib files when converting to Android (xcgen)
  * xcgen add gitignors to xcodeproj and -android folder (xcgen)
  * fixed performance issue with font caching (StellaGraphics)
+ * fix AVAudioPlayer  isPlaying is always NO issue (StellaMedia)
 
 
  
