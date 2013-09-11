@@ -1,0 +1,9 @@
+[submodule "android-ndk-r8d"]
+	path = android-ndk-r8d
+	url = https://github.com/morningtec/android-ndk-r8d.git
+[submodule "android-sdk-macosx"]
+	path = android-sdk-macosx
+	url = https://github.com/morningtec/android-sdk-macosx.git
+[submodule "samples"]
+	path = samples
+	url = https://github.com/morningtec/samples.git
