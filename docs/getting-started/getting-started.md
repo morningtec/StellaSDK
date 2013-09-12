@@ -27,10 +27,10 @@ Stella SDK can be cloned and installed from github. Get the installer from githu
     $ git clone https://github.com/morningtec/StellaSDK.git
     $ /opt/StellaSDK/bin/stella-config --install
 
-You need to restart Xcode and Terminal after the installation. Update Stella SDK for the first time and then periodically afterwards. Suppose the latest release is r2.0:
+You need to restart Xcode and Terminal after the installation. Update Stella SDK for the first time and then periodically afterwards. Suppose the latest release is r2.2:
 
     $ cd /opt/StellaSDK
-    $ git reset --hard origin/r2.0
+    $ git reset --hard origin/r2.2
     $ /opt/StellaSDK/bin/stella-config --install
 
 
