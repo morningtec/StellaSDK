@@ -79,28 +79,28 @@ def install_pbcompspecs (home_folder):
 def install_submodules ():
 
         os.chdir('/opt/StellaSDK')
-
-        must_update     = 0;
-        git_base_url    = "http://git.oschina.net/morningtec/";
-        submodules      = ["android-ndk-r8d", "android-sdk-macosx", "samples"]
-
-        if not os.popen('cat .git/config | grep oschina').readlines(): 
-                git_base_url = "https://github.com/morningtec/"
-
-        for module in submodules :
-                if not os.path.isdir (module) :
-                        p1 = subprocess.Popen([ "git", "submodule" ], stdout = subprocess.PIPE)
-                        p2 = subprocess.Popen([ "grep", module ], stdin = p1.stdout, stdout = subprocess.PIPE)
-                        p1.stdout.close()
-                        output = p2.communicate()
-                        if not output[0]:
-                                git_clone_url = git_base_url + module + ".git";
-                                subprocess.call([ "git", "submodule", "add", git_clone_url, module]);
-                        else:
-                                must_update += 1;
-
-        if (must_update > 0 ):
-                subprocess.call(["git", "submodule", "update"])
+        subprocess.call(["git", "submodule", "update", "--init"])
+        # must_update     = 0;
+        # git_base_url    = "http://git.oschina.net/morningtec/";
+        # submodules      = ["android-ndk-r8d", "android-sdk-macosx", "samples"]
+        # 
+        # if not os.popen('cat .git/config | grep oschina').readlines(): 
+        #         git_base_url = "https://github.com/morningtec/"
+        # 
+        # for module in submodules :
+        #         if not os.path.isdir (module) :
+        #                 p1 = subprocess.Popen([ "git", "submodule" ], stdout = subprocess.PIPE)
+        #                 p2 = subprocess.Popen([ "grep", module ], stdin = p1.stdout, stdout = subprocess.PIPE)
+        #                 p1.stdout.close()
+        #                 output = p2.communicate()
+        #                 if not output[0]:
+        #                         git_clone_url = git_base_url + module + ".git";
+        #                         subprocess.call([ "git", "submodule", "add", git_clone_url, module]);
+        #                 else:
+        #                         must_update += 1;
+        # 
+        # if (must_update > 0 ):
+        #         subprocess.call(["git", "submodule", "update"])
 
 
 
