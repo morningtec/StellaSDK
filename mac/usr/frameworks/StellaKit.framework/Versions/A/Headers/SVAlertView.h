@@ -9,14 +9,11 @@
 
 @class UITextField;
 
-/* Compatibility */
-
-/* Prototypes */
 typedef enum {
-    UIAlertViewStyleDefault = 0,
-    UIAlertViewStyleSecureTextInput,
-    UIAlertViewStylePlainTextInput,
-    UIAlertViewStyleLoginAndPasswordInput
+        UIAlertViewStyleDefault                 = 0,
+        UIAlertViewStyleSecureTextInput,
+        UIAlertViewStylePlainTextInput,
+        UIAlertViewStyleLoginAndPasswordInput
 } UIAlertViewStyle;
 
 @protocol UIAlertViewDelegate;

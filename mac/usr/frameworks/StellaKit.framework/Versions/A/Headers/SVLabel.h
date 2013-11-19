@@ -14,31 +14,30 @@
 {
 }
 
-@property(nonatomic, copy) NSString               * text;
-@property(nonatomic, retain) UIFont               * font;
-@property(nonatomic, retain) UIColor              * textColor;
-@property(nonatomic) UITextAlignment                textAlignment;
-@property(nonatomic) UILineBreakMode                lineBreakMode;
-@property(nonatomic, getter=isEnabled) BOOL         enabled;
-
-@property(nonatomic) BOOL                           adjustsFontSizeToFitWidth;
-@property(nonatomic) SVBaselineAdjustment           baselineAdjustment;
-@property(nonatomic) CGFloat                        minimumFontSize;
-@property(nonatomic) NSInteger                      numberOfLines;
-
-@property(nonatomic, retain) UIColor              * highlightedTextColor;
-@property(nonatomic, getter=isHighlighted) BOOL     highlighted;
-
-@property(nonatomic, retain) UIColor              * shadowColor;
-@property(nonatomic) CGSize                         shadowOffset;
-
-/* Apple-begin */
-@property(nonatomic) CGFloat                                preferredMaxLayoutWidth;
-@property(nonatomic, getter=isUserInteractionEnabled) BOOL  userInteractionEnabled;
+@property(nonatomic, copy) NSString                       * text;
 @property(nonatomic,copy) NSAttributedString              * attributedText;
+@property(nonatomic, retain) UIFont                       * font;
+@property(nonatomic, retain) UIColor                      * textColor;
+@property(nonatomic) UITextAlignment                        textAlignment;
+@property(nonatomic) UILineBreakMode                        lineBreakMode;
+@property(nonatomic, getter=isEnabled) BOOL                 enabled;
+
+@property(nonatomic) BOOL                                   adjustsFontSizeToFitWidth;
 @property(nonatomic) BOOL                                   adjustsLetterSpacingToFitWidth;
+@property(nonatomic) SVBaselineAdjustment                   baselineAdjustment;
 @property(nonatomic) CGFloat                                minimumScaleFactor;
-/* Apple-end */
+@property(nonatomic) CGFloat                                minimumFontSize;
+@property(nonatomic) NSInteger                              numberOfLines;
+
+@property(nonatomic, retain) UIColor                      * highlightedTextColor;
+@property(nonatomic, getter=isHighlighted) BOOL             highlighted;
+
+@property(nonatomic, retain) UIColor                      * shadowColor;
+@property(nonatomic) CGSize                                 shadowOffset;
+
+@property(nonatomic, getter=isUserInteractionEnabled) BOOL  userInteractionEnabled;
+
+@property(nonatomic) CGFloat                                preferredMaxLayoutWidth;
 
 @end
 

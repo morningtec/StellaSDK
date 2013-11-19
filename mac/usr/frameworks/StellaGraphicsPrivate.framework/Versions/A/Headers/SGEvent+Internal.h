@@ -27,10 +27,12 @@ typedef enum {
         SGKeyUp                 = 11,
         SGFlagsChanged          = 12,
         SGPeriodic              = 13,
-        SGCursorUpdate          = 14,   
+        SGCursorUpdate          = 14,
 
         SGScrollWheel           = 18,
         SGApplicationDefined    = 19,
+
+        SGTouchEventType        = 20,
 
         SGAppKitSystem                  = 1000,
         SGPlatformSpecific              = 1500,

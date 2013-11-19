@@ -28,11 +28,13 @@
 
 
 
-#define CGPathCreateMutable       SGPathCreateMutable
-#define CGPathCreateMutableCopy   SGPathCreateMutableCopy
-#define CGPathCreateCopy          SGPathCreateCopy
-#define CGPathRelease             SGPathRelease
-#define CGPathRetain              SGPathRetain
+#define CGPathCreateMutable             SGPathCreateMutable
+#define CGPathCreateWithRect            SGPathCreateWithRect
+#define CGPathCreateWithRoundedRect     SGPathCreateWithRoundedRect
+#define CGPathCreateCopy                SGPathCreateCopy
+#define CGPathCreateMutableCopy         SGPathCreateMutableCopy
+#define CGPathRelease                   SGPathRelease
+#define CGPathRetain                    SGPathRetain
 
 #define CGPathAddArc              SGPathAddArc
 #define CGPathAddArcToPoint       SGPathAddArcToPoint
@@ -43,6 +45,7 @@
 #define CGPathAddQuadCurveToPoint SGPathAddQuadCurveToPoint
 #define CGPathAddRect             SGPathAddRect
 #define CGPathAddRects            SGPathAddRects
+#define CGPathAddRounded          SGPathAddRoundedRect
 #define CGPathApply               SGPathApply
 #define CGPathMoveToPoint         SGPathMoveToPoint
 #define CGPathCloseSubpath        SGPathCloseSubpath
@@ -83,9 +86,11 @@ typedef struct {
 typedef void (*SGPathApplierFunction)(void * info, const SGPathElement * element);
 
 
-STELLA_GRAPHICS_EXPORT SGMutablePathRef SGPathCreateMutable (void);
-STELLA_GRAPHICS_EXPORT SGMutablePathRef SGPathCreateMutableCopy (SGPathRef self);
+STELLA_GRAPHICS_EXPORT SGMutablePathRef SGPathCreateMutable ();
+STELLA_GRAPHICS_EXPORT SGPathRef        SGPathCreateWithRect (SGRect rect, const SGAffineTransform * xform);
+STELLA_GRAPHICS_EXPORT SGPathRef        SGPathCreateWithRoundedRect (SGRect rect, SGFloat cornerWidth, SGFloat cornerHeight, const SGAffineTransform * xform);
 STELLA_GRAPHICS_EXPORT SGPathRef        SGPathCreateCopy (SGPathRef self);
+STELLA_GRAPHICS_EXPORT SGMutablePathRef SGPathCreateMutableCopy (SGPathRef self);
 STELLA_GRAPHICS_EXPORT void             SGPathRelease (SGPathRef self);
 STELLA_GRAPHICS_EXPORT SGPathRef        SGPathRetain (SGPathRef self);
 
@@ -98,6 +103,7 @@ STELLA_GRAPHICS_EXPORT void             SGPathAddPath (SGMutablePathRef self, co
 STELLA_GRAPHICS_EXPORT void             SGPathAddQuadCurveToPoint (SGMutablePathRef self, const SGAffineTransform * xform, SGFloat cpx, SGFloat cpy, SGFloat x, SGFloat y);
 STELLA_GRAPHICS_EXPORT void             SGPathAddRect (SGMutablePathRef self, const SGAffineTransform * xform, SGRect rect);
 STELLA_GRAPHICS_EXPORT void             SGPathAddRects (SGMutablePathRef self, const SGAffineTransform * xform, const SGRect * rects, size_t count);
+STELLA_GRAPHICS_EXPORT void             SGPathAddRoundedRect (SGMutablePathRef path, const SGAffineTransform * xform, SGRect rect, SGFloat cornerWidth, SGFloat cornerHeight);
 STELLA_GRAPHICS_EXPORT void             SGPathApply (SGPathRef self, void * info, SGPathApplierFunction function);
 STELLA_GRAPHICS_EXPORT void             SGPathMoveToPoint (SGMutablePathRef self, const SGAffineTransform * xform, SGFloat x, SGFloat y);
 STELLA_GRAPHICS_EXPORT void             SGPathAddEllipseInRect (SGMutablePathRef self, const SGAffineTransform * xform, SGRect rect);

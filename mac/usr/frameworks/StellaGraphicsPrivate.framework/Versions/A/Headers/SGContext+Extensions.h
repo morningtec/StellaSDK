@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2011 Yeecco Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,10 +23,10 @@
 @end
 
 @interface SGContext (Internal)
-+ (SGContext *) createContextWithSize: (SGSize) size 
++ (SGContext *) createContextWithSize: (SGSize) size
                                window: (SGWindow *) window;
 
-- (id) initWithSize: (SGSize) size 
+- (id) initWithSize: (SGSize) size
              window: (SGWindow *) SGWindow;
 
 @end

@@ -25,8 +25,8 @@ STELLA_GRAPHICS_EXPORT NSString * const     kSAMediaTimingFunctionDefault;
 {
 }
 + (id) functionWithName: (NSString *)name;
-+ (id) functionWithControlPoints: (float) c1x: (float)c1y: (float) c2x: (float)c2y;
-- (id) initWithControlPoints: (float) c1x: (float) c1y: (float)c2x: (float) c2y;
++ (id) functionWithControlPoints: (float) c1x : (float) c1y : (float) c2x : (float) c2y;
+- (id) initWithControlPoints: (float) c1x : (float) c1y : (float)c2x : (float) c2y;
 
 - (void) getControlPointAtIndex: (size_t) index values: (float[2]) ptr;
 

@@ -68,7 +68,7 @@ typedef enum {
 @end
 
 
-@interface UITableView : UIScrollView 
+@interface UITableView : UIScrollView
 {
 }
 

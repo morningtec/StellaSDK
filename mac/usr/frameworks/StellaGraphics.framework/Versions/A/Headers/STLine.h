@@ -51,7 +51,7 @@ typedef uint32_t STLineTruncationType;
 
 STELLA_GRAPHICS_EXPORT STLineRef STLineCreateWithAttributedString (CFAttributedStringRef string);
 STELLA_GRAPHICS_EXPORT STLineRef STLineCreateTruncatedLine ( STLineRef line, double width, STLineTruncationType truncationType,
-	                                                STLineRef truncationToken );
+                                                    STLineRef truncationToken );
 STELLA_GRAPHICS_EXPORT STLineRef STLineCreateJustifiedLine ( STLineRef line, CGFloat justificationFactor,
                                                    double justificationWidth );
 

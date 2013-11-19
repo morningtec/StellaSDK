@@ -20,7 +20,7 @@ enum {
 };
 typedef NSUInteger UIViewAutoresizing;
 
-enum {
+typedef enum {
         UIViewContentModeScaleToFill,
         UIViewContentModeScaleAspectFit,
         UIViewContentModeScaleAspectFill,
@@ -34,41 +34,40 @@ enum {
         UIViewContentModeTopRight,
         UIViewContentModeBottomLeft,
         UIViewContentModeBottomRight,
-};
-typedef NSUInteger UIViewContentMode;
+} UIViewContentMode;
 
 enum {
-    UIViewAnimationOptionLayoutSubviews            = 1 <<  0,
-    UIViewAnimationOptionAllowUserInteraction      = 1 <<  1,
-    UIViewAnimationOptionBeginFromCurrentState     = 1 <<  2,
-    UIViewAnimationOptionRepeat                    = 1 <<  3,
-    UIViewAnimationOptionAutoreverse               = 1 <<  4,
-    UIViewAnimationOptionOverrideInheritedDuration = 1 <<  5,
-    UIViewAnimationOptionOverrideInheritedCurve    = 1 <<  6,
-    UIViewAnimationOptionAllowAnimatedContent      = 1 <<  7,
-    UIViewAnimationOptionShowHideTransitionViews   = 1 <<  8,
+        UIViewAnimationOptionLayoutSubviews            = 1 <<  0,
+        UIViewAnimationOptionAllowUserInteraction      = 1 <<  1,
+        UIViewAnimationOptionBeginFromCurrentState     = 1 <<  2,
+        UIViewAnimationOptionRepeat                    = 1 <<  3,
+        UIViewAnimationOptionAutoreverse               = 1 <<  4,
+        UIViewAnimationOptionOverrideInheritedDuration = 1 <<  5,
+        UIViewAnimationOptionOverrideInheritedCurve    = 1 <<  6,
+        UIViewAnimationOptionAllowAnimatedContent      = 1 <<  7,
+        UIViewAnimationOptionShowHideTransitionViews   = 1 <<  8,
 
-    UIViewAnimationOptionCurveEaseInOut            = 0 << 16,
-    UIViewAnimationOptionCurveEaseIn               = 1 << 16,
-    UIViewAnimationOptionCurveEaseOut              = 2 << 16,
-    UIViewAnimationOptionCurveLinear               = 3 << 16,
+        UIViewAnimationOptionCurveEaseInOut            = 0 << 16,
+        UIViewAnimationOptionCurveEaseIn               = 1 << 16,
+        UIViewAnimationOptionCurveEaseOut              = 2 << 16,
+        UIViewAnimationOptionCurveLinear               = 3 << 16,
 
-    UIViewAnimationOptionTransitionNone            = 0 << 20,
-    UIViewAnimationOptionTransitionFlipFromLeft    = 1 << 20,
-    UIViewAnimationOptionTransitionFlipFromRight   = 2 << 20,
-    UIViewAnimationOptionTransitionCurlUp          = 3 << 20,
-    UIViewAnimationOptionTransitionCurlDown        = 4 << 20,
-    UIViewAnimationOptionTransitionCrossDissolve   = 5 << 20,
-    UIViewAnimationOptionTransitionFlipFromTop     = 6 << 20,
-    UIViewAnimationOptionTransitionFlipFromBottom  = 7 << 20,
+        UIViewAnimationOptionTransitionNone            = 0 << 20,
+        UIViewAnimationOptionTransitionFlipFromLeft    = 1 << 20,
+        UIViewAnimationOptionTransitionFlipFromRight   = 2 << 20,
+        UIViewAnimationOptionTransitionCurlUp          = 3 << 20,
+        UIViewAnimationOptionTransitionCurlDown        = 4 << 20,
+        UIViewAnimationOptionTransitionCrossDissolve   = 5 << 20,
+        UIViewAnimationOptionTransitionFlipFromTop     = 6 << 20,
+        UIViewAnimationOptionTransitionFlipFromBottom  = 7 << 20,
 };
 typedef NSUInteger UIViewAnimationOptions;
 
 typedef enum {
-    UIViewAnimationCurveEaseInOut,
-    UIViewAnimationCurveEaseIn,
-    UIViewAnimationCurveEaseOut,
-    UIViewAnimationCurveLinear
+        UIViewAnimationCurveEaseInOut,
+        UIViewAnimationCurveEaseIn,
+        UIViewAnimationCurveEaseOut,
+        UIViewAnimationCurveLinear
 } UIViewAnimationCurve;
 
 typedef enum {
@@ -153,25 +152,25 @@ typedef enum {
 - (NSArray *) gestureRecognizers;
 - (void) setGestureRecognizers: (NSArray *) gestureRecognizers;
 
-+ (void) animateWithDuration: (NSTimeInterval) duration 
++ (void) animateWithDuration: (NSTimeInterval) duration
                        delay: (NSTimeInterval) delay
-                     options: (UIViewAnimationOptions) options 
-                  animations: (void (^)(void)) animations 
+                     options: (UIViewAnimationOptions) options
+                  animations: (void (^)(void)) animations
                   completion: (void (^)(BOOL finished)) completion;
 + (void) animateWithDuration: (NSTimeInterval) duration
                   animations: (void (^)(void)) animations
                   completion: (void (^)(BOOL finished)) completion;
-+ (void) animateWithDuration: (NSTimeInterval) duration 
++ (void) animateWithDuration: (NSTimeInterval) duration
                   animations: (void (^)(void)) animations;
-+ (void) transitionWithView: (UIView *) view 
-                   duration: (NSTimeInterval) duration 
++ (void) transitionWithView: (UIView *) view
+                   duration: (NSTimeInterval) duration
                     options: (UIViewAnimationOptions) options
                  animations: (void (^)(void)) animations
                  completion: (void (^)(BOOL finished)) completion;
-+ (void) transitionFromView: (UIView *) fromView 
-                     toView: (UIView *) toView 
-                   duration: (NSTimeInterval) duration 
-                    options: (UIViewAnimationOptions) options 
++ (void) transitionFromView: (UIView *) fromView
+                     toView: (UIView *) toView
+                   duration: (NSTimeInterval) duration
+                    options: (UIViewAnimationOptions) options
                  completion: (void (^)(BOOL finished)) completion;
 
 

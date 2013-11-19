@@ -18,4 +18,5 @@
 + (id) sharedHelper;
 
 - (jclass) classIDFromName: (NSString *) name;
+- (void) backButtonDown;
 @end

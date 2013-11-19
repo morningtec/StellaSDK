@@ -11,4 +11,9 @@
 @property(readonly,nonatomic) CGSize    size;
 @property(readonly,nonatomic) CGFloat   pixelAspectRatio;
 
+/* stella extension */
++ (UIScreenMode *) screenModeWithName: (NSString *) name;
+- (id) initWithName: (NSString *) name;
+
+
 @end

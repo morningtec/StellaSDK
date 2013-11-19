@@ -8,7 +8,7 @@
 #if defined (STELLA_GRAPHICS_INSIDE_BUILD)
 #define STELLA_GRAPHICS_EXPORT extern "C" __declspec(dllexport)
 #else
-#define STELLA_GRAPHICS_EXPORT extern "C" __declspec(dllimport) 
+#define STELLA_GRAPHICS_EXPORT extern "C" __declspec(dllimport)
 #endif
 #else
 #define STELLA_GRAPHICS_EXPORT extern "C"

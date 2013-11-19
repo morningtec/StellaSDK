@@ -9,25 +9,27 @@
 #import "SVImage.h"
 
 
-/* Prototypes */
 @interface UIImageView : UIView
 {
 }
 
-@property(retain, nonatomic) UIImage              * image;
-@property(nonatomic, getter=isHighlighted) BOOL     highlighted;
-/* Apple-begin */
-@property(nonatomic, getter=isUserInteractionEnabled) BOOL      userInteractionEnabled;
-@property(nonatomic, copy) NSArray                            * highlightedAnimationImages;
+@property(nonatomic, retain) UIImage                          * image;
+@property(nonatomic, retain) UIImage                          * highlightedImage;
+
 @property(nonatomic, copy) NSArray                            * animationImages;
+@property(nonatomic, copy) NSArray                            * highlightedAnimationImages;
 @property(nonatomic) NSTimeInterval                             animationDuration;
 @property(nonatomic) NSInteger                                  animationRepeatCount;
-/* Apple-end */
+
+@property(nonatomic, getter=isUserInteractionEnabled) BOOL      userInteractionEnabled;
+@property(nonatomic, getter=isHighlighted) BOOL                 highlighted;
+@property(nonatomic, retain) UIColor                          * tintColor;
+
 - (id) initWithImage: (UIImage *) image;
-/* Apple-begin */
 - (id) initWithImage: (UIImage *) image highlightedImage: (UIImage *) highlightedImage;
+
 - (void) startAnimating;
 - (BOOL) isAnimating;
 - (void) stopAnimating;
-/* Apple-end */
+
 @end

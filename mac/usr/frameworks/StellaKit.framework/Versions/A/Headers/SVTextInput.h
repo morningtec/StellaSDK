@@ -22,7 +22,7 @@
 }
 
 @end
- 
+
 
 @interface UITextRange : NSObject
 {

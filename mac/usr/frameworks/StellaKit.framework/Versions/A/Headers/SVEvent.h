@@ -9,6 +9,7 @@
 typedef enum {
         UIEventTypeTouches,
         UIEventTypeMotion,
+        _UIEventTypeKeyPress,
 } UIEventType;
 
 typedef enum {

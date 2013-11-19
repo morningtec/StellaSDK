@@ -19,7 +19,7 @@ enum {
         UISegmentedControlNoSegment = -1
 };
 
-@interface UISegmentedControl : UIControl 
+@interface UISegmentedControl : UIControl
 
 @property (nonatomic) UISegmentedControlStyle   segmentedControlStyle;
 @property (nonatomic,strong) UIColor          * tintColor;
