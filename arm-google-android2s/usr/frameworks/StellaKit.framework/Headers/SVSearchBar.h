@@ -11,7 +11,7 @@
 // @class UISearchField;
 // @class UIKey;
 
-@interface UISearchBar : UIView 
+@interface UISearchBar : UIView
 
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) id<UISearchBarDelegate> delegate;

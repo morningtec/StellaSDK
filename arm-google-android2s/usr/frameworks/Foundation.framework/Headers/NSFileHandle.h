@@ -212,6 +212,8 @@ GS_EXPORT NSString * const NSFileHandleOperationException;
 - (BOOL) writeInProgress;
 @end
 
+#if defined (__STELLA_LITE)
+#else
 /**
  * Where OpenSSL is available, you can use the subclass returned by +sslClass
  * to handle SSL connections.<br />
@@ -371,3 +373,6 @@ GS_EXPORT NSString * const GSFileHandleNotificationError;
 #endif
 
 #endif /* __NSFileHandle_h_GNUSTEP_BASE_INCLUDE */
+
+#endif /* __STELLA_LITE */
+

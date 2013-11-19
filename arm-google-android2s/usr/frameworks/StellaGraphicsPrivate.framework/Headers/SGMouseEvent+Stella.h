@@ -13,9 +13,9 @@
 
 @interface SGMouseEvent : SGEvent
 {
-	    int   _clickCount;
-	    float _deltaX;
-	    float _deltaY;
+        int   _clickCount;
+        float _deltaX;
+        float _deltaY;
         NSInteger _trackingNumber;
         void *_userData;
 }
@@ -27,8 +27,8 @@
 - (id) initWithType: (SGEventType) type
            location: (NSPoint) location
       modifierFlags: (NSUInteger) modifierFlags
-           delegate: (id) delegate 
-         clickCount: (int) clickCount 
+           delegate: (id) delegate
+         clickCount: (int) clickCount
              deltaX: (float) deltaX
              deltaY: (float)deltaY;
 

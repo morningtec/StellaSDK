@@ -33,6 +33,7 @@ typedef enum _SGEventType {
         SGScrollWheel=18,
         SGApplicationDefined=19,
 
+        SGTouchEventType    = 20,
 
         SGAppKitSystem                  = 1000,
         SGPlatformSpecific              = 1500,

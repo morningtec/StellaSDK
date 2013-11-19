@@ -12,11 +12,12 @@
 
 typedef enum {
         UIButtonTypeCustom              = 0,
-        UIButtonTypeRoundedRect,
+        UIButtonTypeSystem,
         UIButtonTypeDetailDisclosure,
         UIButtonTypeInfoLight,
         UIButtonTypeInfoDark,
         UIButtonTypeContactAdd,
+        UIButtonTypeRoundedRect
 } UIButtonType;
 
 @class UIColor;
@@ -25,21 +26,6 @@ typedef enum {
 
 @interface UIButton : UIControl
 {
-        id                          _bt_id01;
-        BOOL                        _bt_bool01;
-
-        BOOL                        _bt_bool11;
-        BOOL                        _bt_bool12;
-        BOOL                        _bt_bool13;
-
-        NSUInteger                  _bt_uinteger01;
-
-        id                          _bt_id11;
-        id                          _bt_id12;
-        id                          _bt_id13;
-
-        id                          _bt_id21;
-        id                          _bt_id22;
 }
 
 @property(nonatomic,readonly,retain) UILabel              * titleLabel;

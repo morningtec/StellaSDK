@@ -37,10 +37,10 @@
 
 #define CGRectGetMinX        SGRectGetMinX
 #define CGRectGetMinY        SGRectGetMinY
-#define CGRectGetMaxX        SGRectGetMaxX
-#define CGRectGetMaxY        SGRectGetMaxY
 #define CGRectGetMidX        SGRectGetMidX
 #define CGRectGetMidY        SGRectGetMidY
+#define CGRectGetMaxX        SGRectGetMaxX
+#define CGRectGetMaxY        SGRectGetMaxY
 
 
 #define CGRectGetWidth       SGRectGetWidth
@@ -88,6 +88,8 @@ STELLA_GRAPHICS_EXPORT BOOL     SGRectContainsRect (SGRect rect1, SGRect rect2);
 
 STELLA_GRAPHICS_EXPORT SGFloat SGRectGetMinX (SGRect rect);
 STELLA_GRAPHICS_EXPORT SGFloat SGRectGetMaxX (SGRect rect);
+STELLA_GRAPHICS_EXPORT SGFloat SGRectGetMidX (SGRect rect);
+STELLA_GRAPHICS_EXPORT SGFloat SGRectGetMidY (SGRect rect);
 STELLA_GRAPHICS_EXPORT SGFloat SGRectGetMinY (SGRect rect);
 STELLA_GRAPHICS_EXPORT SGFloat SGRectGetMaxY (SGRect rect);
 

@@ -64,16 +64,6 @@ typedef enum {
 
 @interface UIControl : UIView
 {
-        NSUInteger                              _ct_uinteger01;
-        BOOL                                    _ct_bool01;
-        BOOL                                    _ct_bool02;
-        BOOL                                    _ct_bool03;
-
-        id                                      _ct_id_01;
-
-        BOOL                                    _ct_bool11;
-        BOOL                                    _ct_bool12;
-
 }
 
 @property(nonatomic, readonly) UIControlState               state;

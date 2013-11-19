@@ -576,9 +576,11 @@ GS_EXPORT NSString* const NSLoadedClasses;
  *   that you add a comment (even if it is unused for now).
  * </p>
  */
+#if defined (__STELLA_LITE)
+#else
 #define NSLocalizedString(key, comment) \
   [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]
-
+#endif /* __STELLA_LITE */
 /**
  * This function (macro) does the same as
  * <code>NSLocalizedString</code>, but uses the table
@@ -594,9 +596,11 @@ GS_EXPORT NSString* const NSLoadedClasses;
  * choosing between the different translation by choosing a
  * different table.
  */
+#if defined (__STELLA_LITE)
+#else
 #define NSLocalizedStringFromTable(key, tbl, comment) \
   [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:(tbl)]
-
+#endif
 /**
  * This function is the full-blown localization function (it
  * is actually a macro).  It looks up the string

@@ -57,7 +57,7 @@ typedef enum {
 
 - (BOOL) _shouldAttemptToRecognize;
 - (void) _recognizeTouches: (NSSet *) touches withEvent: (UIEvent *) event;
-                
+
 
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event;
 - (void) touchesMoved: (NSSet *) touches withEvent: (UIEvent *) event;

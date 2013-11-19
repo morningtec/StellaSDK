@@ -55,18 +55,17 @@ STELLA_KIT_EXPORT NSString * const      UIApplicationWillResignActiveNotificatio
 
 
 typedef enum {
-    UIRemoteNotificationTypeNone    = 0,
-    UIRemoteNotificationTypeBadge   = 1 << 0,
-    UIRemoteNotificationTypeSound   = 1 << 1,
-    UIRemoteNotificationTypeAlert   = 1 << 2,
-    UIRemoteNotificationTypeNewsstandContentAvailability = 1 << 3
+        UIRemoteNotificationTypeNone    = 0,
+        UIRemoteNotificationTypeBadge   = 1 << 0,
+        UIRemoteNotificationTypeSound   = 1 << 1,
+        UIRemoteNotificationTypeAlert   = 1 << 2,
+        UIRemoteNotificationTypeNewsstandContentAvailability = 1 << 3
 } UIRemoteNotificationType;
 
-
 typedef enum {
-    UIApplicationStateActive,
-    UIApplicationStateInactive,
-    UIApplicationStateBackground
+        UIApplicationStateActive,
+        UIApplicationStateInactive,
+        UIApplicationStateBackground
 } UIApplicationState;
 
 
@@ -74,15 +73,15 @@ typedef NSUInteger UIBackgroundTaskIdentifier;
 
 
 typedef enum {
-    UIStatusBarAnimationNone,
-    UIStatusBarAnimationFade,
-    UIStatusBarAnimationSlide,
+        UIStatusBarAnimationNone,
+        UIStatusBarAnimationFade,
+        UIStatusBarAnimationSlide,
 } UIStatusBarAnimation;
 
 
 typedef enum {
-    UIUserInterfaceLayoutDirectionLeftToRight,
-    UIUserInterfaceLayoutDirectionRightToLeft,
+        UIUserInterfaceLayoutDirectionLeftToRight,
+        UIUserInterfaceLayoutDirectionRightToLeft,
 } UIUserInterfaceLayoutDirection;
 
 @protocol UIApplicationDelegate;

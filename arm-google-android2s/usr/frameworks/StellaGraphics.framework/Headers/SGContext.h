@@ -336,14 +336,14 @@ STELLA_GRAPHICS_EXPORT void                   SGContextDrawPath (SGContextRef co
 STELLA_GRAPHICS_EXPORT void                   SGContextEOFillPath (SGContextRef context);
 STELLA_GRAPHICS_EXPORT void                   SGContextFillPath (SGContextRef context);
 STELLA_GRAPHICS_EXPORT void                   SGContextFillRect (SGContextRef context, SGRect rect);
-STELLA_GRAPHICS_EXPORT void                   SGContextFillRects (SGContextRef context, const SGRect * rects, unsigned count);
+STELLA_GRAPHICS_EXPORT void                   SGContextFillRects (SGContextRef context, const SGRect * rects, size_t count);
 STELLA_GRAPHICS_EXPORT void                   SGContextFillEllipseInRect (SGContextRef context, SGRect rect);
 STELLA_GRAPHICS_EXPORT void                   SGContextStrokePath (SGContextRef context);
 STELLA_GRAPHICS_EXPORT void                   SGContextStrokeRect (SGContextRef context, SGRect rect);
 STELLA_GRAPHICS_EXPORT void                   SGContextStrokeRectWithWidth (SGContextRef context, SGRect rect, SGFloat width);
 STELLA_GRAPHICS_EXPORT void                   SGContextReplacePathWithStrokedPath (SGContextRef context);
 STELLA_GRAPHICS_EXPORT void                   SGContextStrokeEllipseInRect (SGContextRef context, SGRect rect);
-STELLA_GRAPHICS_EXPORT void                   SGContextStrokeLineSegments (SGContextRef context, const SGPoint * points, unsigned count);
+STELLA_GRAPHICS_EXPORT void                   SGContextStrokeLineSegments (SGContextRef context, const SGPoint * points, size_t count);
 
 STELLA_GRAPHICS_EXPORT bool                   SGContextIsPathEmpty (SGContextRef context);
 STELLA_GRAPHICS_EXPORT SGPoint                SGContextGetPathCurrentPoint (SGContextRef context);

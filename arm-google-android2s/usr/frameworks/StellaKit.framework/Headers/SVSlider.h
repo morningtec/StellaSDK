@@ -8,25 +8,24 @@
 
 @class UIImageView, UIImage;
 @interface UISlider : UIControl
+{
+}
 
-@property(nonatomic) float                      value;
-@property(nonatomic) float                      minimumValue;
-@property(nonatomic) float                      maximumValue;
-@property(nonatomic, getter = isContinuous)     BOOL continuous;
-@property(nonatomic, retain) UIImage          * minimumValueImage;
-@property(nonatomic, retain) UIImage          * maximumValueImage;
-@property(nonatomic, retain) UIColor          * minimumTrackTintColor;
-@property(nonatomic, readonly) UIImage        * currentMinimumTrackImage;
-@property(nonatomic, retain) UIColor          * maximumTrackTintColor;
-@property(nonatomic, readonly) UIImage        * currentMaximumTrackImage;
-@property(nonatomic, retain) UIColor          * thumbTintColor;
-@property(nonatomic, readonly) UIImage        * currentThumbImage;
+@property(nonatomic) float                          value;
 
+@property(nonatomic) float                          minimumValue;
+@property(nonatomic) float                          maximumValue;
 
+@property(nonatomic, getter=isContinuous) BOOL      continuous;
 
-
-- (id) initWithFrame: (CGRect) frame;
-- (void) dealloc;
+@property(nonatomic, retain) UIImage              * minimumValueImage;
+@property(nonatomic, retain) UIImage              * maximumValueImage;
+@property(nonatomic, retain) UIColor              * minimumTrackTintColor;
+@property(nonatomic, readonly) UIImage            * currentMinimumTrackImage;
+@property(nonatomic, retain) UIColor              * maximumTrackTintColor;
+@property(nonatomic, readonly) UIImage            * currentMaximumTrackImage;
+@property(nonatomic, retain) UIColor              * thumbTintColor;
+@property(nonatomic, readonly) UIImage            * currentThumbImage;
 
 
 - (void) setValue: (float) value animated: (BOOL) animated;

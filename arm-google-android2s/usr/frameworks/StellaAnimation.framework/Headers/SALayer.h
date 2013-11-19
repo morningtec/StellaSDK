@@ -12,16 +12,43 @@
 #define CALayerDelegate         SALayerDelegate
 #define CALayoutManager         SALayoutManager
 
-#define kCAOnOrderIn            kSAOnOrderIn
-#define kCAOnOrderOut           kSAOnOrderOut
-#define kCATransition           kSATransition
+#define kCAOnOrderIn                    kSAOnOrderIn
+#define kCAOnOrderOut                   kSAOnOrderOut
+#define kCATransition                   kSATransition
 
-#define CAAction                SAAction
+#define kCAGravityCenter                kSAGravityCenter
+#define kCAGravityTop                   kSAGravityTop
+#define kCAGravityBottom                kSAGravityBottom
+#define kCAGravityLeft                  kSAGravityLeft
+#define kCAGravityRight                 kSAGravityRight
+#define kCAGravityTopLeft               kSAGravityTopLeft
+#define kCAGravityTopRight              kSAGravityTopRight
+#define kCAGravityBottomLeft            kSAGravityBottomLeft
+#define kCAGravityBottomRight           kSAGravityBottomRight
+#define kCAGravityResize                kSAGravityResize
+#define kCAGravityResizeAspect          kSAGravityResizeAspect
+#define kCAGravityResizeAspectFill      kSAGravityResizeAspectFill
+
+
+#define CAAction                        SAAction
 
 
 STELLA_GRAPHICS_EXPORT NSString * const     kSAOnOrderIn;
 STELLA_GRAPHICS_EXPORT NSString * const     kSAOnOrderOut;
 STELLA_GRAPHICS_EXPORT NSString * const     kSATransition;
+
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityCenter;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityTop;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityBottom;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityLeft;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityRight;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityTopLeft;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityTopRight;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityBottomLeft;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityBottomRight;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityResize;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityResizeAspect;
+STELLA_GRAPHICS_EXPORT NSString * const     kCAGravityResizeAspectFill;
 
 
 @protocol SAAction
@@ -41,9 +68,11 @@ STELLA_GRAPHICS_EXPORT NSString * const     kSATransition;
 @property SGRect                            contentsRect;
 @property SGRect                            contentsCenter;
 
+@property(copy) NSString                  * contentsGravity;
 @property float                             opacity;
 @property(getter=isHidden) BOOL             hidden;
 @property(assign) BOOL                      masksToBounds;
+@property CGFloat                           cornerRadius;
 @property CGFloat                           borderWidth;
 @property(retain) CGColorRef                borderColor;
 @property(retain) CGColorRef                backgroundColor;
@@ -60,6 +89,8 @@ STELLA_GRAPHICS_EXPORT NSString * const     kSATransition;
 
 @property(readonly) SALayer               * superlayer;
 @property(copy) NSArray                   * sublayers;
+
+@property BOOL                              needsDisplayOnBoundsChange;
 
 @property(copy) NSDictionary              * actions;
 

@@ -175,7 +175,7 @@ struct android_app {
     AInputQueue* pendingInputQueue;
     ANativeWindow* pendingWindow;
     ARect pendingContentRect;
-    
+
     /* WC - looper */
     int     looper_msgread;
     int     looper_msgwrite;

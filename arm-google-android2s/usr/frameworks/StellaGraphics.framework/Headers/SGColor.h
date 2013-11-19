@@ -33,21 +33,20 @@
 
 /* Prototypes */
 @class SGColor;
-typedef SGColor     * SGColorRef;   
+typedef SGColor     * SGColorRef;
 
 
-STELLA_GRAPHICS_EXPORT SGColorRef      SGColorRetain (SGColorRef self);
-STELLA_GRAPHICS_EXPORT void            SGColorRelease (SGColorRef self);
+STELLA_GRAPHICS_EXPORT SGColorRef      SGColorRetain (SGColorRef color);
+STELLA_GRAPHICS_EXPORT void            SGColorRelease (SGColorRef color);
 
-STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreate (SGColorSpaceRef colorSpace, const SGFloat * components);
-STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreateCopy (SGColorRef self);
-STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreateCopyWithAlpha (SGColorRef self, SGFloat a);
-STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreateWithPattern (SGColorSpaceRef colorSpace, SGPatternRef pattern, const SGFloat * components);
+STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreate (SGColorSpaceRef colorspace, const SGFloat * components);
+STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreateCopy (SGColorRef color);
+STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreateCopyWithAlpha (SGColorRef color, SGFloat alpha);
+STELLA_GRAPHICS_EXPORT SGColorRef      SGColorCreateWithPattern (SGColorSpaceRef colorspace, SGPatternRef pattern, const SGFloat * components);
 
-STELLA_GRAPHICS_EXPORT bool            SGColorEqualToColor (SGColorRef self, SGColorRef other);
-
-STELLA_GRAPHICS_EXPORT SGFloat         SGColorGetAlpha (SGColorRef self);
-STELLA_GRAPHICS_EXPORT SGColorSpaceRef SGColorGetColorSpace (SGColorRef self);
-STELLA_GRAPHICS_EXPORT const SGFloat * SGColorGetComponents (SGColorRef self);
-STELLA_GRAPHICS_EXPORT size_t          SGColorGetNumberOfComponents (SGColorRef self);
-STELLA_GRAPHICS_EXPORT SGPatternRef    SGColorGetPattern (SGColorRef self);
+STELLA_GRAPHICS_EXPORT BOOL            SGColorEqualToColor (SGColorRef color, SGColorRef other);
+STELLA_GRAPHICS_EXPORT SGFloat         SGColorGetAlpha (SGColorRef color);
+STELLA_GRAPHICS_EXPORT SGColorSpaceRef SGColorGetColorSpace (SGColorRef color);
+STELLA_GRAPHICS_EXPORT const SGFloat * SGColorGetComponents (SGColorRef color);
+STELLA_GRAPHICS_EXPORT size_t          SGColorGetNumberOfComponents (SGColorRef color);
+STELLA_GRAPHICS_EXPORT SGPatternRef    SGColorGetPattern (SGColorRef color);

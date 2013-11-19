@@ -21,5 +21,7 @@
 - (void) initJVMUIThread;
 - (jclass) classIDFromName: (NSString *) name;
 
+- (void) backButtonPressed;
+
 @end
 

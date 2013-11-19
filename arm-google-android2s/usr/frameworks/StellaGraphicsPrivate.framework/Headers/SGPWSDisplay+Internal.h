@@ -12,12 +12,19 @@
 
 @protocol SGTextureBackedLayer;
 
-enum _SGInterfaceIdiom {
+enum {
         SGInterfaceIdiomPhone,
         SGInterfaceIdiomPad,
         SGInterfaceIdiomFullScreen,
 };
 typedef NSUInteger      SGInterfaceIdiom;
+
+enum {
+        SGScreenBestEmulationMode,
+        SGScreenIPhone3GEmulationMode,
+};
+typedef NSUInteger  SGScreenEmulationMode;
+
 
 
 @interface SGPWSDisplay : NSObject
@@ -26,36 +33,42 @@ typedef NSUInteger      SGInterfaceIdiom;
 
 @property(nonatomic, readonly) SGInterfaceIdiom         userInterfaceIdiom;
 @property(nonatomic, readonly) SGContext              * context;
-@property(nonatomic, readonly) SGFloat                  canvasScale;
+
+@property(nonatomic, readonly) SGSize                   canvasSize;
+@property(nonatomic, readonly) SGFloat                  dpi;
+
 
 // @property(nonatomic, copy) NSString                   * publishingLicenceKey;
 
++ (SGScreenEmulationMode) screenEmulationMode;
++ (void) setScreenEmulationMode: (SGScreenEmulationMode) mode;
 
 + (SGPWSDisplay *) sharedDisplay;
 
 - (SGEvent *) nextEventMatchingMask: (NSUInteger) mask  untilDate: (NSDate *) untilDate inMode: (NSString *) mode dequeue: (BOOL) dequeue;
-                            
+
 - (SGPWSWindow *) allocPWSWindowWithFrame: (SGRect) frame;
 - (void) deallocPWSWindow: (SGPWSWindow *) window;
 - (void) flushPWSWindow: (SGPWSWindow *) window;
-
-- (SGRect) screenBounds;
 
 
 - (BOOL) renderTextureBackedLayer: (id<SGTextureBackedLayer>) layer;
 
 - (void) updateDisplay;
 
-- (void) setAcceleration: (double) accelX: (double) accelY : (double) accelZ;
-- (void) getAcceleration: (double *) accelXRet: (double *) accelYRet : (double *) accelZRet;
+- (void) setAcceleration: (double) accelX : (double) accelY : (double) accelZ;
+- (void) getAcceleration: (double *) accelXRet : (double *) accelYRet : (double *) accelZRet;
 
-- (void) getAcceleration: (double *) accelXRet: (double *) accelYRet :(double *) accelZRet isChanged: (BOOL *) isChanged;
+- (void) getAcceleration: (double *) accelXRet : (double *) accelYRet :(double *) accelZRet isChanged: (BOOL *) isChanged;
 
 
 - (void) setPublishingLicenceKey: (NSString *) publishingLicenceKey;
 
--(void) writeAudioPlaybackEndPipe;
+- (void) writeAudioPlaybackEndPipe;
 
+- (SGFloat) resolutionScale;
+- (SGSize) deviceScreenSizePX;
+- (SGRect) userScreenBoundsPT;
 
 @end
 

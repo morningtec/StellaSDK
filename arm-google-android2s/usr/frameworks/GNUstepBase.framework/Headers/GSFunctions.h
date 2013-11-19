@@ -34,9 +34,12 @@
 extern "C" {
 #endif
 
+#if defined (__STELLA_LITE)
+#else
 #define GSLocalizedStringFromTableInFramework(key, tbl, fpth, comment) \
   [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" \
   table: [bundle pathForGNUstepResource:(tbl) ofType: nil inDirectory: (fpth)]
+#endif
 
   /* Now Support for Quick Localization */
 

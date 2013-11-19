@@ -233,7 +233,11 @@ typedef	struct {
 #define GS_USE_GNUTLS 0
 #define GS_USE_AVAHI 0
 #define GS_USE_MDNS 0
+#if defined (__STELLA_LITE)
+#define GS_USE_ICU 0
+#else
 #define GS_USE_ICU 1
+#endif
 
 #define GS_USE_LIBDISPATCH 1
 #define GS_HAVE_OBJC_ROOT_CLASS_ATTR 1

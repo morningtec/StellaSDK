@@ -59,7 +59,6 @@ GS_EXPORT NSString*	GSDebugMethodMsg(id obj, SEL sel, const char *file,
 
 
 #ifdef GSDIAGNOSE
-
 /**
    <p>NSDebugLLog() is the basic debug logging macro used to display
    log messages using NSLog(), if debug logging was enabled at compile
@@ -198,6 +197,7 @@ GS_EXPORT NSString*	GSDebugMethodMsg(id obj, SEL sel, const char *file,
 #define NSDebugMRLog(object, msg)
 #endif
 
+#ifdef GSDIAGNOSE
 /**
  * Macro to log a message only the first time it is encountered.<br />
  * Not entirely thread safe ... but that's not really important,
@@ -233,6 +233,12 @@ GS_EXPORT NSString*	GSDebugMethodMsg(id obj, SEL sel, const char *file,
       [NSString stringWithFormat: format, ##args]); \
     beenHere = YES; \
     NSLog(@"%@", s); }} while (0)
+#else
+
+/* STELLA */
+#define GSOnceFLog(format, args...)     /**/
+#define GSOnceMLog(format, args...)     /**/
+#endif
 
 
 #ifdef GSWARN

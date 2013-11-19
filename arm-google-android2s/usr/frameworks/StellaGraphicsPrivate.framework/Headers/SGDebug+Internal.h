@@ -36,14 +36,14 @@ extern void SGMethodCallTrace (NSString * level, id self, SEL selector);
 #define SGExceptionAbstract() { \
         NSString      * methodFormat; \
         methodFormat    = [ NSString stringWithFormat: @"[%@%@ %@]", NSStringFromClass (isa), \
-                            (Class) self == isa ? @" +" : [NSString stringWithFormat: @"<%p> -", self], NSStringFromSelector (_cmd) ]; \
+                            (Class) self == [self class] ? @" +" : [NSString stringWithFormat: @"<%p> -", self], NSStringFromSelector (_cmd) ]; \
         [NSException raise: NSInternalInconsistencyException format: @"%@ abstract method", methodFormat]; \
 }
 
 #define SGExceptionUnimplemented() { \
         NSString      * methodFormat; \
         methodFormat    = [ NSString stringWithFormat: @"[%@%@ %@]", NSStringFromClass (isa), \
-                            (Class) self == isa ? @" +" : [NSString stringWithFormat: @"<%p> -", self], NSStringFromSelector (_cmd) ]; \
+                            (Class) self == [self class] ? @" +" : [NSString stringWithFormat: @"<%p> -", self], NSStringFromSelector (_cmd) ]; \
         [NSException raise: NSInternalInconsistencyException format: @"%@ unimplemented method", methodFormat]; \
 }
 
