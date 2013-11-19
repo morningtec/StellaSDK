@@ -1,7 +1,7 @@
 
 ## Using Stella SDK Features
 
-### At a glance
+### JNIHelper At a glance
 
 While Stella SDK is an Objective-C framework, Android development features many third-party APIs that are Java-based. Stella SDK Pro offers a JNIHelper class that provides a means of two-way communication between Objective-C and Java. This allows Objective-C developers to leverage third-party Java APIs in their apps quickly.
 
@@ -23,14 +23,14 @@ Understanding the separation between the __Android UI thread__ and __Stella thre
 
 Conceptually the communication can be both ways. Suppose the native side initiates an action, the sequence of events are described as follows:
 
-| Stella thread                    | Android UI thread
-| -                                | -
-| native: initiate call to Java    |
-| Java: run command on UI thread   |
-|                                  | Java: command run on UI thread
-|                                  | Java: native callback
-|                                  | native: forward callback to stella thread
-| native: action performed         |
+| Stella thread                         | Android UI thread
+| -                                     | -
+| native: initiate call to Java         |
+| Java: command run in Stella thread    |
+|                                       | Java: command run in Android UI thread
+|                                       | Java: native callback
+|                                       | native: forward callback to stella thread
+| native: action performed              |
 
 
 #### Using JNIHelper
@@ -138,6 +138,73 @@ On the Java side, set paypoint info and just launch `doBilling ()` with a callba
             });
     }
 
+### Add android widget view
+StellaSDK allows you to easily add a android view (like google Adview) to the app. The following code will add a blue bannber view to the app, manually implement it in the onCreate();
+
+	RelativeLayout  _mainView       = mainView;
+	TextView        _bannerView;
+	bannerView                      = new TextView (this);
+	DisplayMetrics metrics          = new DisplayMetrics();
+	getWindowManager().getDefaultDisplay().getMetrics(metrics);
+	_mainView.addView (bannerView, new LayoutParams (metrics.widthPixels, metrics.heightPixels/12));
+	_bannerView.setBackgroundColor (Color.parseColor("#33B5E5"));
+	_bannerView.setText("Hello StellaSDK2");
+
+
+
+### StellaSDK extensions
+
+
+
+#### BackKeyEvent
+The window object sends the BackKey event to the first responder for handling. If the first responder cannot handle an event, it forwards the event to the next responder in the responder chain.
+
+
+The guide below demonstrates how to handle the BackKeyEvent in your application.
+Press the device back button,the KeyDown:(UIEvent *)event method on the responders in the UIResponder chain is invoked. Implement the method manually.
+
+	<!--AppDelegate.m-->
+	 - (void) KeyDown: (UIEvent *) event
+    {
+        #if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__ANDROID__)
+            _backKeyLabel.text      = @"BackKey Down!!!";
+        #endif
+    }
+
+	- (BOOL) canBecomeFirstResponder
+	{
+			return YES;
+	}
+
+
+If you want handle the backPressed event on java, should send the message to java by JNI;
+
+
+
+
+#### UIScreen
+Use the UIScreen extensions on [UIScreen mainScreen] to query the DPI of the Android screen. 
+
+	@property(nonatomic, readonly) CGFloat          dpi;    /* stella extension */
+	@property(nonatomic, readonly, retain) UIScreenMode       * iPhone3GEmulationMode;  /* stella extension */
+
+
+You can try UIScreenIPhone3GEmulationMode if the app is designed for the iphone devices, or UIScreenBestEmulationMode if you want a full virtual screen of the device.
+
+Put the following code in main after initializing autorelease pool.
+
+	int main(int argc, char *argv[]) {
+	    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	#if defined (__STELLA_VERSION_MAX_ALLOWED)
+	    [UIScreen mainScreen].currentMode   = [UIScreen mainScreen].iPhone3GEmulationMode;
+	#endif
+	    int retVal = UIApplicationMain(argc, argv, nil, @"AppDelegate");
+	    [pool release];
+	    return retVal;
+	}
+
+
+
 
 
 
@@ -170,5 +237,9 @@ Revision    | Notes
 -           | -
 20120911    | Initial revision
 20130822    | Changes for Stella SDK II
+20130913    | Minor fixes and adding BillingSDK
+20131101    | Adding BackKeyEvent
+20131111    | Adding android widget view
+20131207    | Minor fixes and adding UIScreen
 
 
