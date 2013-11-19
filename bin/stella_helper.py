@@ -194,25 +194,48 @@ g_cocos2dv1_files   = [ \
 g_cocos2dv2_template_path   = '/opt/StellaSDK/samples/cocos2d-iphone-2.0';
 g_cocos2dv2_files   = [ \
     'cocos2d', \
-    'external/kazmath', \
-    'Resources/Icon.png', \
-    'Resources/Default.png', \
-    'Resources/Info.plist', \
-    'Resources/Fonts/MarkerFelt.fnt', \
-    'Resources/Fonts/fps_images.png', \
-    'tests/main.m', \
-    'tests/Prefix.pch', \
-    'tests/HelloTest.m', \
-    'tests/HelloTest.h', \
-    'tests/BaseAppController.m', \
-    'tests/BaseAppController.h', \
     'CocosDenshion/CocosDenshion', \
     'CocosDenshion/CocosDenshionExtras', \
-    'CocosDenshion/TestsAndDemos/FancyRatMeteringDemo' ];
+    'external', \
+    'tests/SceneTest.h', \
+    'tests/SceneTest.m', \
+    'tests/BaseAppController.h', \
+    'tests/BaseAppController.m', \
+    'tests/main.m', \
+    'Resources/Info.plist', \
+    'Resources/Default.png', \
+    'Resources/Icon-72.png', \
+    'Resources/Icon-Small-50.png', \
+    'Resources/Icon-Small.png', \
+    'Resources/Icon-Small@2x.png', \
+    'Resources/Icon.png', \
+    'Resources/Icon@2x.png', \
+    'Resources/iTunesArtWork', \
+    'Resources/Images/b1-hd.png', \
+    'Resources/Images/b1-ipad.png', \
+    'Resources/Images/b2-hd.png', \
+    'Resources/Images/b2-ipad.png', \
+    'Resources/Images/background3-hd.png', \
+    'Resources/Images/f1-hd.png', \
+    'Resources/Images/f1-ipad.png', \
+    'Resources/Images/f2-hd.png', \
+    'Resources/Images/f2-ipad.png', \
+    'Resources/Images/fire.pvr', \
+    'Resources/Images/grossini.png', \
+    'Resources/Images/grossini-hd.png', \
+    'Resources/Images/grossinis_sister1-hd.png', \
+    'Resources/Images/grossinis_sister1.png', \
+    'Resources/Images/grossinis_sister2-hd.png', \
+    'Resources/Images/grossinis_sister2.png', \
+    'Resources/Images/r1-hd.png', \
+    'Resources/Images/r1-ipad.png', \
+    'Resources/Images/r2-hd.png', \
+    'Resources/Images/r2-ipad.png', \
+    'Resources/Fonts/fps_images-ipadhd.png', \
+    'Resources/Fonts/fps_images-hd.png', \
+    'Resources/Fonts/fps_images.png' ];
 
-
-
-def blit_folder_contents (src_folder, src_files, dst_folder):
+def blit_folder_contents_old (src_folder, src_files, dst_folder):
 
         for f in src_files:
                 if os.path.isdir (src_folder + '/' + f):
@@ -230,7 +253,7 @@ def blit_folder_contents (src_folder, src_files, dst_folder):
                         shutil.copy (src_folder + '/' + f, dst_folder + '/' + f);
 
 
-def blit_cocos2d_template_xcodeproj (src_folder, dst_folder, name):
+def blit_cocos2d_template_xcodeproj_old (src_folder, dst_folder, name):
 
         if not os.path.isdir (dst_folder):
                 os.makedirs (dst_folder);
@@ -244,11 +267,60 @@ def blit_cocos2d_template_xcodeproj (src_folder, dst_folder, name):
                       xcodeproj_path + '/project.pbxproj');
 
 
-def setup_cocos2dv1_template (folder, name):
+def blit_folder_contents (src_folder, src_files, dst_folder):
+
+        for f in src_files:
+                d   = os.path.dirname (f);
+                if not os.path.isdir (dst_folder + '/' + d):
+                        os.makedirs (dst_folder + '/' + d);
+
+                src_path    = os.path.join (src_folder, f);
+                des_path    = os.path.join (dst_folder, f);
+
+                os.system ("cp -Rn " + src_path +" " + os.path.dirname(des_path));
+
+def blit_cocos2d_template_xcodeproj (src_folder, dst_folder, name):
+
+        if not os.path.isdir (dst_folder):
+                os.makedirs (dst_folder);
+
+        xcodeproj_path  = dst_folder + '/' + name + '.xcodeproj';
+
+        if not os.path.isdir (xcodeproj_path):
+                os.makedirs (xcodeproj_path);
+
+        src_path    = os.path.join (src_folder, 'template.xcodeproj/project.pbxproj');
+        des_path    = os.path.join (xcodeproj_path, 'project.pbxproj');
+
+        os.system ("cp -Rn " + src_path +" " + des_path);
+
+
+
+def setup_cocos2dv1_template_old (folder, name):
 
         src_folder      = g_cocos2dv1_template_path;
         src_files       = g_cocos2dv1_files;
         dst_folder      = folder + '/' + name;
+
+        blit_cocos2d_template_xcodeproj_old (src_folder, dst_folder, name);
+        blit_folder_contents_old (src_folder, src_files, dst_folder);
+
+
+def setup_cocos2dv2_template_old (folder, name):
+
+        src_folder      = g_cocos2dv2_template_path;
+        src_files       = g_cocos2dv2_files;
+        dst_folder      = folder + '/' + name;
+
+        blit_cocos2d_template_xcodeproj_old (src_folder, dst_folder, name);
+        blit_folder_contents2_old (src_folder, src_files, dst_folder);
+
+
+def setup_cocos2dv1_template (folder, name):
+
+        src_folder      = g_cocos2dv1_template_path;
+        src_files       = g_cocos2dv1_files;
+        dst_folder      = folder;
 
         blit_cocos2d_template_xcodeproj (src_folder, dst_folder, name);
         blit_folder_contents (src_folder, src_files, dst_folder);
@@ -258,8 +330,9 @@ def setup_cocos2dv2_template (folder, name):
 
         src_folder      = g_cocos2dv2_template_path;
         src_files       = g_cocos2dv2_files;
-        dst_folder      = folder + '/' + name;
+        dst_folder      = folder;
 
         blit_cocos2d_template_xcodeproj (src_folder, dst_folder, name);
         blit_folder_contents (src_folder, src_files, dst_folder);
+
 
